@@ -1,0 +1,153 @@
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg: #080812;
+  --bg2: #0d0d1f;
+  --bg3: #111128;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --accent: #7c3aed;
+  --accent2: #06b6d4;
+  --accent3: #f472b6;
+  --text: #e2e8f0;
+  --muted: #64748b;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Cursor */
+.cursor-dot {
+  width: 12px; height: 12px; background: var(--accent2);
+  border-radius: 50%; position: fixed; top: 0; left: 0;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%); mix-blend-mode: screen;
+  transition: background 0.1s;
+}
+.cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(6,182,212,0.5); border-radius: 50%;
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%); transition: all 0.15s ease;
+}
+
+/* Grid overlay */
+.grid-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Scroll progress */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 200;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 0.1s;
+}
+
+/* Section inner */
+.section-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 6%;
+}
+
+/* Reveal */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Tag / chip */
+.tag {
+  font-size: 0.6rem; padding: 0.2rem 0.5rem;
+  background: rgba(124,58,237,0.1);
+  border: 1px solid rgba(124,58,237,0.2);
+  border-radius: 2px; color: #a78bfa; letter-spacing: 0.05em;
+}
+.tech-chip {
+  font-size: 0.65rem; padding: 0.3rem 0.7rem;
+  background: rgba(6,182,212,0.08);
+  border: 1px solid rgba(6,182,212,0.2);
+  border-radius: 3px; color: var(--accent2); letter-spacing: 0.05em;
+}
+
+/* Divider */
+.divider {
+  width: 60px; height: 3px; margin: 1.5rem auto;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 2px;
+}
+.divider-left { margin-left: 0; }
+
+/* Section header */
+.section-header { text-align: center; margin-bottom: 5rem; }
+.section-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent2);
+  margin-bottom: 1rem; display: block;
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800; letter-spacing: -0.02em;
+}
+.section-title em { font-style: normal; color: var(--accent2); }
+.section-desc {
+  color: var(--muted); font-size: 0.9rem; line-height: 1.8;
+  max-width: 500px; margin: 1rem auto 0;
+}
+
+/* Typing cursor blink */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.typing-cursor {
+  display: inline-block; width: 3px; height: 0.85em;
+  background: var(--accent2); margin-left: 4px;
+  vertical-align: middle; animation: blink 0.9s infinite;
+}
+
+/* Float */
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* Pulse dot */
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+/* FadeUp / FadeIn for hero */
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* Marquee */
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* Back to top */
+a.back-to-top {
+  position: fixed; bottom: 2rem; left: 2rem; z-index: 100;
+  width: 44px; height: 44px; border-radius: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 1.1rem; text-decoration: none;
+  transition: all 0.3s;
+}
+a.back-to-top:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Toast */
+@keyframes slideUp {
+  from{transform:translateY(100px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+.toast-show {
+  animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor-dot, .cursor-ring { display: none; }
+}

@@ -1,0 +1,35 @@
+<!-- Custom cursor -->
+<div class="cursor-dot"
+  [style.left.px]="cursorX"
+  [style.top.px]="cursorY">
+</div>
+<div class="cursor-ring"
+  [style.left.px]="ringX"
+  [style.top.px]="ringY">
+</div>
+
+<!-- Scroll progress -->
+<div class="scroll-progress" [style.width.%]="scrollProgress"></div>
+
+<!-- Grid overlay -->
+<div class="grid-overlay"></div>
+
+<!-- Navigation -->
+<app-nav></app-nav>
+
+<!-- Main content -->
+<main>
+  <app-hero></app-hero>
+  <app-marquee></app-marquee>
+  <app-about></app-about>
+  <app-experience></app-experience>
+  <app-projects></app-projects>
+  <app-certifications></app-certifications>
+  <app-services></app-services>
+  <app-contact></app-contact>
+</main>
+
+<app-footer></app-footer>
+
+<!-- Back to top -->
+<a *ngIf="showBackToTop" href="#hero" class="back-to-top" title="Back to top">↑</a>

@@ -22,7 +22,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 artifacts-monorepo/
 ├── artifacts/              # Deployable applications
 │   ├── api-server/         # Express API server
-│   └── portfolio/          # Manav Nanda portfolio (React + Vite)
+│   └── portfolio/          # Manav Nanda portfolio (Angular 19)
 ├── lib/                    # Shared libraries
 │   ├── api-spec/           # OpenAPI spec + Orval codegen config
 │   ├── api-client-react/   # Generated React Query hooks
@@ -38,22 +38,35 @@ artifacts-monorepo/
 
 ## Portfolio Artifact (`artifacts/portfolio`)
 
-A React + Vite personal portfolio website for Manav Nanda.
+An Angular 19 personal portfolio website for Manav Nanda (Full-Stack Developer).
 
 - **Preview path**: `/` (root)
-- **Stack**: React, TypeScript, Vite, Tailwind CSS v4
-- **Fonts**: Syne (headings) + Space Mono (mono/body)
+- **Stack**: Angular 19 (standalone components), TypeScript 5.6, `@angular-devkit/build-angular` (esbuild builder)
+- **Dev server**: `ng serve --host 0.0.0.0 --port 21113`
+- **Fonts**: Syne 800 (headings) + Space Mono (mono/body) via Google Fonts
+- **Design**: Dark theme — bg `#080812`, accents purple `#7c3aed` / cyan `#06b6d4` / pink `#f472b6`
+- **Components** (all standalone in `src/app/components/`):
+  - `nav` — fixed navbar with active section highlighting (IntersectionObserver)
+  - `hero` — typing animation, CTA buttons, floating stat badges
+  - `marquee` — auto-scrolling tech stack strip
+  - `about` — bio + skill cards grid (Frontend / Backend / Data & Cloud / Integrations)
+  - `experience` — timeline of work history
+  - `projects` — filterable project cards (All / Angular / .NET / Full-Stack / Cloud)
+  - `certifications` — cert cards + education
+  - `services` — service offering cards
+  - `contact` — contact info + NgModel form with toast feedback
+  - `footer` — links, socials, copyright
 - **Features**:
-  - Custom animated cursor
+  - Custom animated cursor (dot + ring with RAF interpolation)
   - Scroll progress bar
-  - Typing animation (role cycling)
-  - Scroll-reveal animations
+  - Typing animation cycling through developer roles
+  - IntersectionObserver scroll-reveal (`.reveal` class)
   - Active nav highlighting
-  - Project filter (All / Personal / Company / Internship)
-  - Contact form with validation + toast
+  - Project filter buttons
+  - Contact form with toast
   - Back-to-top button
   - Responsive layout
-- **Sections**: Hero, Marquee, About, Experience, Projects, Certifications, Services, Contact, Footer
+- **Sections**: Hero → Marquee → About → Experience → Projects → Certifications → Services → Contact → Footer
 
 ## TypeScript & Composite Projects
 

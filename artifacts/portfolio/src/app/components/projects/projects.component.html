@@ -1,0 +1,40 @@
+<section id="projects" class="projects-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">// What I've Built</span>
+      <h2 class="section-title">Featured <em>Projects</em></h2>
+      <div class="divider"></div>
+      <p class="section-desc">Production applications shipped across diverse domains — from SaaS billing to real-estate platforms.</p>
+    </div>
+
+    <div class="filter-bar reveal">
+      <button *ngFor="let f of filters"
+              class="filter-btn"
+              [class.active]="active === f"
+              (click)="setFilter(f)">
+        {{ f }}
+      </button>
+    </div>
+
+    <div class="projects-grid">
+      <div *ngFor="let p of filtered; let i = index"
+           class="project-card reveal"
+           [style.transition-delay]="(i * 0.05) + 's'">
+        <div class="card-top">
+          <div class="card-glow" [style.background]="p.color"></div>
+          <h3 class="card-title">{{ p.title }}</h3>
+          <p class="card-desc">{{ p.desc }}</p>
+        </div>
+        <div class="card-highlights">
+          <div *ngFor="let h of p.highlights" class="highlight-item">
+            <span class="highlight-dot" [style.background]="p.color"></span>
+            {{ h }}
+          </div>
+        </div>
+        <div class="card-tags">
+          <span *ngFor="let t of p.tags" class="tech-chip">{{ t }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

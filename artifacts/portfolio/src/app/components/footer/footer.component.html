@@ -1,0 +1,26 @@
+<footer class="footer">
+  <div class="section-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">MN.DEV</div>
+        <p class="footer-tagline">Building the web one component at a time — Angular · .NET · AWS</p>
+      </div>
+
+      <nav class="footer-nav">
+        <a *ngFor="let l of links" [href]="l.href">{{ l.label }}</a>
+      </nav>
+
+      <div class="footer-socials">
+        <a *ngFor="let s of socials" [href]="s.href" [title]="s.title"
+           target="_blank" rel="noreferrer" class="social-icon">
+          {{ s.label }}
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; {{ year }} Manav Nanda. Built with Angular.</span>
+      <span class="footer-made">Designed &amp; developed by Manav Nanda · Ahmedabad, India</span>
+    </div>
+  </div>
+</footer>

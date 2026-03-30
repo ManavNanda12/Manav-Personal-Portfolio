@@ -1,0 +1,36 @@
+<section id="companies" class="exp-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">// Where I've worked</span>
+      <h2 class="section-title">Professional <em>Experience</em></h2>
+      <div class="divider"></div>
+      <p class="section-desc">My journey building production-grade software across startups and enterprise products.</p>
+    </div>
+
+    <div class="timeline">
+      <div *ngFor="let job of jobs; let i = index"
+           class="timeline-item reveal"
+           [style.transition-delay]="(i * 0.1) + 's'">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <div class="exp-top">
+            <div>
+              <div class="exp-period">{{ job.period }}</div>
+              <h3 class="exp-role">{{ job.role }}</h3>
+              <div class="exp-company">
+                {{ job.company }}
+                <span class="tag">{{ job.type }}</span>
+              </div>
+            </div>
+          </div>
+          <ul class="exp-bullets">
+            <li *ngFor="let b of job.bullets">{{ b }}</li>
+          </ul>
+          <div class="exp-tech">
+            <span *ngFor="let t of job.tech" class="tech-chip">{{ t }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,23 @@
+<section id="services" class="services-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">// What I offer</span>
+      <h2 class="section-title">My <em>Services</em></h2>
+      <div class="divider"></div>
+      <p class="section-desc">End-to-end software development services tailored for startups and enterprise teams.</p>
+    </div>
+
+    <div class="services-grid">
+      <div *ngFor="let s of services; let i = index"
+           class="service-card reveal"
+           [style.transition-delay]="(i * 0.08) + 's'">
+        <div class="svc-icon">{{ s.icon }}</div>
+        <h3 class="svc-title">{{ s.title }}</h3>
+        <p class="svc-desc">{{ s.desc }}</p>
+        <div class="svc-tags">
+          <span *ngFor="let t of s.tags" class="tag">{{ t }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

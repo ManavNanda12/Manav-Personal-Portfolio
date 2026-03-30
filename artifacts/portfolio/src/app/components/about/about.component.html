@@ -1,0 +1,37 @@
+<section id="about" class="about-section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-left reveal">
+        <span class="section-eyebrow">// About Me</span>
+        <h2 class="about-title">Building <em>scalable</em> systems that last</h2>
+        <div class="divider divider-left"></div>
+        <div class="about-body">
+          <p>I'm a Full-Stack Developer with 2.4 years of hands-on experience designing and building scalable web applications. My core stack is Angular + .NET Core + SQL, but I'm equally comfortable working across the full cloud-to-client pipeline.</p>
+          <p>I've shipped 9+ production applications, optimised SQL performance by 40%, cut API response times by 32% using Redis caching, and deployed on AWS with EC2, S3, and RDS. I take pride in writing clean, maintainable code and always look for opportunities to improve both performance and developer experience.</p>
+          <p>Currently based in Ahmedabad, India. B.Tech (IT) from Marwadi University with a 9.05 CGPA. AWS Certified. Always learning.</p>
+        </div>
+        <div class="about-socials">
+          <a *ngFor="let s of socials"
+             [href]="s.href"
+             [target]="s.external ? '_blank' : ''"
+             rel="noreferrer"
+             class="social-pill">
+            {{ s.label }}
+          </a>
+        </div>
+      </div>
+
+      <div class="about-right reveal" style="transition-delay:0.15s">
+        <div class="skills-grid">
+          <div *ngFor="let skill of skills" class="skill-card">
+            <div class="skill-icon">{{ skill.icon }}</div>
+            <div class="skill-name">{{ skill.name }}</div>
+            <div class="skill-tags">
+              <span *ngFor="let t of skill.tags" class="tag">{{ t }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,11 @@
+<nav class="nav">
+  <div class="nav-logo">MN.DEV</div>
+  <ul class="nav-links">
+    <li *ngFor="let link of links">
+      <a [href]="link.href" [class.active]="activeSection === link.id">
+        {{ link.label }}
+        <span class="underline"></span>
+      </a>
+    </li>
+  </ul>
+</nav>

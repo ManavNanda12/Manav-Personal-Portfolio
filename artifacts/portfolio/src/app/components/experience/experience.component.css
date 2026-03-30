@@ -1,0 +1,25 @@
+.exp-section { padding: 120px 0; position: relative; z-index: 1; }
+.timeline { position: relative; padding-left: 2.5rem; border-left: 1px solid var(--border); max-width: 800px; margin: 0 auto; }
+.timeline-item { position: relative; margin-bottom: 3rem; }
+.timeline-dot {
+  position: absolute; left: -2.67rem; top: 6px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--accent2); box-shadow: 0 0 20px rgba(6,182,212,0.4);
+  border: 2px solid var(--bg);
+}
+.timeline-content {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 2rem;
+  transition: all 0.3s;
+}
+.timeline-content:hover { border-color: rgba(124,58,237,0.3); transform: translateX(4px); }
+.exp-period { font-size: 0.7rem; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.exp-role { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
+.exp-company { display: flex; align-items: center; gap: 0.7rem; color: var(--muted); font-size: 0.82rem; margin-bottom: 1.2rem; }
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.2rem; }
+.exp-bullets li {
+  font-size: 0.82rem; color: var(--muted); line-height: 1.7;
+  padding-left: 1.2rem; position: relative;
+}
+.exp-bullets li::before { content: '▹'; position: absolute; left: 0; color: var(--accent2); }
+.exp-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
