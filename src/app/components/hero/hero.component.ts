@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 })
 export class HeroComponent implements OnInit, OnDestroy {
   typedText = '';
+  yearsExp = '';
+
   private roles = ['Full-Stack Developer', '.NET Core Expert', 'Angular Developer', 'Cloud & AWS Builder', 'API Architect'];
   private ri = 0;
   private ci = 0;
@@ -17,11 +19,23 @@ export class HeroComponent implements OnInit, OnDestroy {
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
 
   ngOnInit() {
+    this.yearsExp = this.calcExperience();
     this.timeoutId = setTimeout(() => this.type(), 800);
   }
 
   ngOnDestroy() {
     if (this.timeoutId) clearTimeout(this.timeoutId);
+  }
+
+  private calcExperience(): string {
+    // Started Jan 2023 at Shaligram Infotech
+    const start = new Date(2023, 0, 1);
+    const now = new Date();
+    const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12;
+    if (months === 0) return `${years}`;
+    return `${years}.${months < 3 ? '1' : months < 6 ? '3' : months < 9 ? '5' : '8'}`;
   }
 
   private type() {

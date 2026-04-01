@@ -6,16 +6,17 @@
         <h2 class="about-title">Building <em>scalable</em> systems that last</h2>
         <div class="divider divider-left"></div>
         <div class="about-body">
-          <p>I'm a Full-Stack Developer with 2.4 years of hands-on experience designing and building scalable web applications. My core stack is Angular + .NET Core + SQL, but I'm equally comfortable working across the full cloud-to-client pipeline.</p>
-          <p>I've shipped 9+ production applications, optimised SQL performance by 40%, cut API response times by 32% using Redis caching, and deployed on AWS with EC2, S3, and RDS. I take pride in writing clean, maintainable code and always look for opportunities to improve both performance and developer experience.</p>
-          <p>Currently based in Ahmedabad, India. B.Tech (IT) from Marwadi University with a 9.05 CGPA. AWS Certified. Always learning.</p>
+          <p>I'm a Full-Stack Developer with {{ yearsOfExperience }}+ years of experience in Angular, .NET Core, SQL,
+            AI-enabled systems, Azure workflows, chatbot experiences, and full cloud-to-client solutions.</p>
+          <p>I've shipped 9+ production applications and built customer/admin/API portals with AI chatbot flows, Stripe
+            payments, and multi-host deployments on Netlify, Render, and Cloudflare. My work spans fitness management,
+            pregnancy task tracking, kiosk administration, and secure backend API handlers.</p>
+          <p>Currently based in Ahmedabad, India. AWS Certified with a strong focus on continuous learning.</p>
         </div>
         <div class="about-socials">
-          <a *ngFor="let s of socials"
-             [href]="s.href"
-             [target]="s.external ? '_blank' : ''"
-             rel="noreferrer"
-             class="social-pill">
+          <a *ngFor="let s of socials" [href]="s.href" [target]="s.external ? '_blank' : ''" rel="noreferrer"
+            class="social-pill">
+            <i [class]="s.iconClass"></i>
             {{ s.label }}
           </a>
         </div>

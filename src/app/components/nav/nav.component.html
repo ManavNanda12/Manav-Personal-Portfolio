@@ -1,5 +1,7 @@
-<nav class="nav">
+<nav class="nav" [class.menu-open]="menuOpen">
   <div class="nav-logo">MN.DEV</div>
+
+  <!-- Desktop links -->
   <ul class="nav-links">
     <li *ngFor="let link of links">
       <a [href]="link.href" [class.active]="activeSection === link.id">
@@ -8,4 +10,24 @@
       </a>
     </li>
   </ul>
+
+  <!-- Hamburger button -->
+  <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Mobile drawer -->
+  <div class="mobile-menu" [class.open]="menuOpen">
+    <ul>
+      <li *ngFor="let link of links">
+        <a [href]="link.href"
+           [class.active]="activeSection === link.id"
+           (click)="closeMenu()">
+          {{ link.label }}
+        </a>
+      </li>
+    </ul>
+  </div>
 </nav>

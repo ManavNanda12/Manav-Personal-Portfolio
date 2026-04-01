@@ -1,10 +1,10 @@
 <section id="companies" class="exp-section">
   <div class="section-inner">
     <div class="section-header reveal">
-      <span class="section-eyebrow">// Where I've worked</span>
-      <h2 class="section-title">Professional <em>Experience</em></h2>
+      <span class="section-eyebrow">// Experience</span>
+      <h2 class="section-title">Where I've <em>Worked</em></h2>
       <div class="divider"></div>
-      <p class="section-desc">My journey building production-grade software across startups and enterprise products.</p>
+      <p class="section-desc">My professional journey — from internship to full-stack developer.</p>
     </div>
 
     <div class="timeline">
@@ -19,7 +19,10 @@
               <h3 class="exp-role">{{ job.role }}</h3>
               <div class="exp-company">
                 {{ job.company }}
-                <span class="tag">{{ job.type }}</span>
+                <span class="current-badge" *ngIf="job.isCurrent">
+                  <span class="badge-dot"></span>Current
+                </span>
+                <span class="tag" *ngIf="!job.isCurrent">{{ job.type }}</span>
               </div>
             </div>
           </div>

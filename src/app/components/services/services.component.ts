@@ -11,40 +11,40 @@ import { CommonModule } from '@angular/common';
 export class ServicesComponent {
   services = [
     {
+      num: '01',
       icon: '🔷',
-      title: 'Angular Development',
-      desc: 'Scalable SPAs and enterprise portals built with Angular, NgRx state management, RxJS, and lazy-loaded modules for optimal performance.',
-      tags: ['Angular', 'NgRx', 'RxJS', 'TypeScript']
+      title: 'Full-Stack Web Apps',
+      desc: 'End-to-end development with Angular frontend and .NET Core / Web API backend. Clean architecture, RESTful APIs, and responsive UIs that scale.'
     },
     {
-      icon: '⚙️',
-      title: '.NET Core API Development',
-      desc: 'Robust RESTful and GraphQL APIs built with .NET Core — secured with JWT, documented with Swagger, and optimised with Redis caching.',
-      tags: ['.NET Core', 'Web API', 'JWT', 'Redis', 'EF Core']
+      num: '02',
+      icon: '🛒',
+      title: 'E-Commerce Platforms',
+      desc: 'B2B and B2C commerce systems with Stripe payment integration, subscription billing, product catalogues, admin dashboards, and automated email workflows.'
     },
     {
-      icon: '🗄️',
-      title: 'Database Design & Optimisation',
-      desc: 'Schema design, stored procedures, index optimisation, and performance tuning for SQL Server and MySQL databases serving high-traffic workloads.',
-      tags: ['SQL Server', 'MySQL', 'Query Tuning', 'Stored Procs']
+      num: '03',
+      icon: '⚡',
+      title: 'Performance Optimisation',
+      desc: 'SQL indexing and query tuning (proven 40% gains), Redis caching for API performance, and AWS infrastructure right-sizing.'
     },
     {
+      num: '04',
       icon: '☁️',
-      title: 'Cloud Deployment (AWS)',
-      desc: 'End-to-end deployment on AWS — EC2 provisioning, S3 media storage, RDS databases, CloudFront CDN, and IAM security configuration.',
-      tags: ['AWS EC2', 'S3', 'RDS', 'CloudFront', 'IAM']
+      title: 'AWS Cloud Deployment',
+      desc: 'Deploying and managing applications on AWS — EC2 compute, S3 storage, RDS managed databases, Cloudflare CDN integration, and production monitoring.'
     },
     {
-      icon: '💳',
-      title: 'Payment Integration',
-      desc: 'Stripe-powered billing systems with subscription management, webhook handling, dunning flows, and multi-currency invoicing.',
-      tags: ['Stripe', 'Webhooks', 'Subscriptions', 'Invoicing']
-    },
-    {
+      num: '05',
       icon: '🔌',
-      title: 'Third-Party Integrations',
-      desc: 'Connect your app to Firebase, Google Auth, Cloudflare, Power BI, and other services — securely and efficiently.',
-      tags: ['Firebase', 'Google Auth', 'Cloudflare', 'Power BI']
+      title: 'AI & Platform Integrations',
+      desc: 'Stripe, Firebase (Auth & Push), Google OAuth, Cloudflare, Azure Workflows, Claude and chatbot integrations, Power BI embedding, payment gateway integration, and ERP API connectivity.'
+    },
+    {
+      num: '06',
+      icon: '🗄️',
+      title: 'Database Design & Tuning',
+      desc: 'Relational schema design, stored procedures, query optimisation, indexing strategies, and data migration — across SQL Server and MySQL.'
     }
   ];
 }

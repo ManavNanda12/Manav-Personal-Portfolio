@@ -79,10 +79,20 @@ export class AppComponent implements OnInit {
           observer.unobserve(e.target);
         }
       }),
-      { threshold: 0.08, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.05 }
     );
-    setTimeout(() => {
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    }, 100);
+    const attach = () => {
+      const elements = document.querySelectorAll('.reveal');
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('visible');
+        } else {
+          observer.observe(el);
+        }
+      });
+    };
+    setTimeout(attach, 50);
+    setTimeout(attach, 400);
   }
 }

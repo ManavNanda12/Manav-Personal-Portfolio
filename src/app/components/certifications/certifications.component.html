@@ -2,32 +2,23 @@
   <div class="section-inner">
     <div class="section-header reveal">
       <span class="section-eyebrow">// Credentials</span>
-      <h2 class="section-title">Certifications &amp; <em>Education</em></h2>
+      <h2 class="section-title">Certs &amp; <em>Education</em></h2>
       <div class="divider"></div>
     </div>
 
     <div class="certs-grid">
       <div *ngFor="let c of certs; let i = index"
            class="cert-card reveal"
-           [style.transition-delay]="(i * 0.08) + 's'">
-        <div class="cert-top">
-          <div class="cert-icon" [style.color]="c.color">{{ c.icon }}</div>
-          <div class="cert-year">{{ c.year }}</div>
-        </div>
+           [style.transition-delay]="(i * 0.05) + 's'">
+        <div class="cert-icon">{{ c.icon }}</div>
         <div class="cert-name">{{ c.name }}</div>
-        <div class="cert-org" [style.color]="c.color">{{ c.org }}</div>
-        <div class="cert-desc">{{ c.desc }}</div>
+        <div class="cert-issuer">{{ c.org }}</div>
       </div>
-    </div>
 
-    <div class="edu-row">
-      <div *ngFor="let e of edu" class="edu-card reveal">
-        <div class="edu-icon">{{ e.icon }}</div>
-        <div class="edu-info">
-          <div class="edu-degree">{{ e.degree }}</div>
-          <div class="edu-college">{{ e.college }} — {{ e.location }}</div>
-          <div class="edu-meta">{{ e.year }} &nbsp;·&nbsp; <span class="cgpa">CGPA: {{ e.cgpa }}/10</span></div>
-        </div>
+      <div *ngFor="let e of edu" class="cert-card reveal edu-card">
+        <div class="cert-icon">{{ e.icon }}</div>
+        <div class="cert-name">{{ e.degree }} — {{ e.cgpa }} CGPA</div>
+        <div class="cert-issuer">{{ e.college }}, {{ e.year }}</div>
       </div>
     </div>
   </div>

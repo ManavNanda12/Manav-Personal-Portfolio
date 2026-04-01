@@ -6,6 +6,7 @@ interface Job {
   role: string;
   company: string;
   type: string;
+  isCurrent: boolean;
   bullets: string[];
   tech: string[];
 }
@@ -20,32 +21,47 @@ interface Job {
 export class ExperienceComponent {
   jobs: Job[] = [
     {
-      period: 'Jan 2024 – Present',
-      role: 'Full-Stack Developer',
-      company: 'Webiots Technology Pvt. Ltd.',
+      period: 'Jun 2025 — Present',
+      role: 'Full-Stack Developer — Angular / .NET / DotNetNuke',
+      company: 'Evince Development',
       type: 'Full-time',
+      isCurrent: true,
       bullets: [
-        'Built and maintained 6 production applications, cutting post-launch defects by 40%.',
-        'Optimised complex SQL queries — slashed average response time by 40%.',
-        'Implemented Redis caching layer reducing API response time by 32%.',
-        'Developed RESTful .NET Core APIs consumed by Angular SPAs and mobile clients.',
-        'Deployed full-stack apps on AWS EC2 with S3 storage and RDS databases.',
-        'Integrated Stripe payment processing into SaaS billing workflows.'
+        'Developing and maintaining 20+ independently deployable Angular + .NET DNN modules following the ServiceRouteMapper API pattern',
+        'Working with NgRx (Redux pattern) for state management across Angular SPAs — actions, reducers, effects, and selectors',
+        'Integrating with a proprietary ERP backend via REST proxy layer (RequestHandler pattern), managing complex B2B checkout flows with AR credit enforcement',
+        'Implemented Cloudflare Turnstile CAPTCHA across checkout and registration modules',
+        'Contributing to Global Payments credit card integration (pre-auth, capture, void) and curbside pickup timeslot scheduling system'
       ],
-      tech: ['Angular', '.NET Core', 'SQL Server', 'Redis', 'AWS', 'Stripe', 'Hangfire']
+      tech: ['DotNetNuke', 'Angular', '.NET Web API', 'NgRx', 'C#', 'RxJS', 'SCSS', 'Cloudflare']
     },
     {
-      period: 'Jul 2023 – Dec 2023',
-      role: 'Software Developer Intern',
-      company: 'Webiots Technology Pvt. Ltd.',
-      type: 'Internship',
+      period: 'Jan 2023 — May 2025',
+      role: 'Software Developer — Angular / .NET Core / AWS',
+      company: 'Shaligram Infotech',
+      type: 'Full-time',
+      isCurrent: false,
       bullets: [
-        'Developed reusable Angular component library used across 3 products.',
-        'Built CRUD Web APIs with .NET Core and Entity Framework Core.',
-        'Worked closely with senior devs on DotNetNuke (DNN) CMS customisations.',
-        'Automated batch jobs using Hangfire background scheduler.'
+        'Developed 9+ scalable web applications using Angular, .NET Core Web API, AI/chatbot workflows, and Stripe integrations',
+        'Optimised SQL database performance by 40% through strategic indexing and query optimization',
+        'Deployed and managed projects on AWS (EC2, S3, RDS), ensuring scalable cloud infrastructure',
+        'Integrated RESTful APIs with frontend applications for seamless cross-team user experiences'
       ],
-      tech: ['Angular', '.NET Core', 'DNN', 'Entity Framework', 'Hangfire', 'SQL Server']
+      tech: ['Angular', '.NET Core', 'SQL Server', 'Redis', 'AWS EC2', 'AWS S3', 'AWS RDS', 'Web API']
+    },
+    {
+      period: 'Jun 2022 — Jul 2022',
+      role: 'Software Developer Intern',
+      company: 'The Sparks Foundation',
+      type: 'Internship',
+      isCurrent: false,
+      bullets: [
+        'Built a banking system (XAMPP, MySQL, HTML/CSS/JavaScript) implementing 7+ core features including secure transactions',
+        'Optimised MySQL queries, reducing data retrieval time by 30% with efficient indexing and stored procedures',
+        'Conducted 14+ Postman test cases, identifying and resolving bugs to ensure system stability',
+        'Designed an intuitive Bootstrap UI enhancing usability for 100+ users'
+      ],
+      tech: ['HTML/CSS/JS', 'MySQL', 'XAMPP', 'Bootstrap', 'Postman']
     }
   ];
 }

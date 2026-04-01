@@ -11,9 +11,9 @@
       </nav>
 
       <div class="footer-socials">
-        <a *ngFor="let s of socials" [href]="s.href" [title]="s.title"
-           target="_blank" rel="noreferrer" class="social-icon">
-          {{ s.label }}
+        <a *ngFor="let s of socials" [href]="s.href" [title]="s.title" target="_blank" rel="noreferrer"
+          class="social-icon">
+          <i [class]="s.iconClass"></i>
         </a>
       </div>
     </div>

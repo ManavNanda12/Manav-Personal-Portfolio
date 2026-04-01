@@ -11,8 +11,8 @@ import { CommonModule } from '@angular/common';
 export class MarqueeComponent {
   items = [
     'Angular', '.NET Core', 'Web API', 'SQL Server', 'React.js', 'DotNetNuke',
-    'AWS (EC2/S3/RDS)', 'Python', 'Redis', 'Stripe API', 'Firebase', 'NgRx',
-    'Hangfire', 'Cloudflare'
+    'AWS (EC2/S3/RDS)', 'NodeJs','MongoDB', 'Redis', 'Stripe API', 'Firebase', 'NgRx',
+    'Hangfire', 'Cloudflare', 'AI Integrations', 'Azure Workflows', 'Power BI', 'PostgreSQL'
   ];
   get doubled() { return [...this.items, ...this.items]; }
 }

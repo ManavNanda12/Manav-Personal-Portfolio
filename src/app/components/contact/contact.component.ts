@@ -32,10 +32,10 @@ export class ContactComponent {
     }, 4000);
   }
 
-  contacts = [
-    { icon: '✉️', label: 'Email', value: 'nandamanav7@gmail.com', href: 'mailto:nandamanav7@gmail.com' },
-    { icon: '📞', label: 'Phone', value: '+91 878 016 0945', href: 'tel:+918780160945' },
-    { icon: '📍', label: 'Location', value: 'Ahmedabad, India', href: '' },
-    { icon: '💼', label: 'LinkedIn', value: 'linkedin.com/in/manav-nanda', href: 'https://linkedin.com/in/manav-nanda' }
-  ];
+ contacts = [
+  { iconClass: 'fa-solid fa-phone',        label: 'Phone',                      value: '+91 878 016 0945',        href: 'tel:+918780160945' },
+  { iconClass: 'fa-solid fa-envelope',     label: 'Email',                      value: 'manavnanda2404@gmail.com',   href: 'mailto:manavnanda2404@gmail.com' },
+  { iconClass: 'fa-solid fa-location-dot', label: 'Location — Open to Remote',  value: 'Ahmedabad, Gujarat, India', href: '' },
+  { iconClass: 'fa-brands fa-linkedin-in', label: 'Connect professionally',     value: 'LinkedIn Profile',        href: 'https://linkedin.com/in/manav-nanda' }
+];
 }

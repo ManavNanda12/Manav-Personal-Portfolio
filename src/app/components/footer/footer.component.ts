@@ -19,8 +19,9 @@ export class FooterComponent {
     { href: '#contact', label: 'Contact' }
   ];
   socials = [
-    { label: 'LI', href: 'https://linkedin.com/in/manav-nanda', title: 'LinkedIn' },
-    { label: 'GH', href: 'https://github.com', title: 'GitHub' },
-    { label: 'EM', href: 'mailto:nandamanav7@gmail.com', title: 'Email' }
+    { label: 'LinkedIn', iconClass: 'fa-brands fa-linkedin-in', href: 'https://linkedin.com/in/manav-nanda', title: 'LinkedIn' },
+    { label: 'GitHub', iconClass: 'fa-brands fa-github', href: 'https://github.com/ManavNanda12', title: 'GitHub' },
+    { label: 'Email', iconClass: 'fa-solid fa-envelope', href: 'mailto:manavnanda2404@gmail.com', title: 'Email' },
+    { label: 'Instagram', iconClass: 'fa-brands fa-instagram', href: 'https://instagram.com/manav.nanda', title: 'Instagram' }
   ];
 }
