@@ -47,3 +47,5 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+.angular/cache/19.2.23/portfolio/angular-compiler.db
+.angular/cache/19.2.23/portfolio/angular-compiler.db-lock
