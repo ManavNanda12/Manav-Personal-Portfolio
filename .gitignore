@@ -1,51 +1,59 @@
-# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# =========================
+# Node / Angular
+# =========================
+node_modules/
+dist/
+.tmp/
+out-tsc/
+build/
+coverage/
 
-# compiled output
-dist
-tmp
-out-tsc
-*.tsbuildinfo
-.expo
-.expo-shared
+# Angular cache
+.angular/cache
 
-# dependencies
-node_modules
+# =========================
+# Logs
+# =========================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+# =========================
+# Environment files
+# =========================
+src/environments/environment*.ts
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# (OPTIONAL: keep example file)
+!src/environments/environment.example.ts
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
-npm-debug.log
-yarn-error.log
-testem.log
-/typings
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 
-# System Files
+# =========================
+# OS files
+# =========================
 .DS_Store
 Thumbs.db
 
-.cursor/rules/nx-rules.mdc
-.github/instructions/nx.instructions.md
+# =========================
+# Misc
+# =========================
+*.swp
+*.bak
+*.tmp
+*.temp
 
-# Replit
-.cache/
-.local/
-.angular/cache/19.2.23/portfolio/angular-compiler.db
-.angular/cache/19.2.23/portfolio/angular-compiler.db-lock
+# =========================
+# Angular specific
+# =========================
+.angular/
+package-lock.json
