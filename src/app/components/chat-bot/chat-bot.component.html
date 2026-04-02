@@ -1,0 +1,138 @@
+<div class="chatbot-panel" [@panelSlide]>
+  <!-- Tail pointer -->
+  <div class="chatbot-tail"></div>
+
+  <!-- ── Header ── -->
+  <div class="chatbot-header">
+    <div class="chatbot-header__avatar">
+      <!-- MN robot icon styled in portfolio accent -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+        <rect x="16" y="20" width="32" height="24" rx="6" fill="currentColor"/>
+        <rect x="22" y="27" width="8" height="7" rx="2" fill="#080812"/>
+        <rect x="34" y="27" width="8" height="7" rx="2" fill="#080812"/>
+        <rect x="28" y="38" width="8" height="3" rx="1.5" fill="#080812"/>
+        <rect x="30" y="12" width="4" height="8" rx="2" fill="currentColor"/>
+        <circle cx="32" cy="10" r="3" fill="currentColor"/>
+        <rect x="8"  y="28" width="6" height="10" rx="3" fill="currentColor"/>
+        <rect x="50" y="28" width="6" height="10" rx="3" fill="currentColor"/>
+      </svg>
+    </div>
+
+    <div class="chatbot-header__info">
+      <span class="chatbot-header__name">MN<span class="name-dot">.</span>AI</span>
+      <span class="chatbot-header__status">
+        <span class="status-dot"></span>
+        {{ isThinking ? 'Thinking...' : 'Online' }}
+      </span>
+    </div>
+
+    <!-- eyebrow tag -->
+    <div class="chatbot-header__badge">// Manav's Assistant</div>
+  </div>
+
+  <!-- ── Messages ── -->
+  <div class="chatbot-messages" #messagesContainer>
+
+    @for (item of chatsArray; track $index) {
+
+      <!-- Bot bubble -->
+      @if (item.type === 'bot') {
+        <div class="chat-row chat-row--bot">
+          <div class="chat-avatar chat-avatar--bot">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+              <rect x="16" y="20" width="32" height="24" rx="6" fill="currentColor"/>
+              <rect x="22" y="27" width="8" height="7" rx="2" fill="#080812"/>
+              <rect x="34" y="27" width="8" height="7" rx="2" fill="#080812"/>
+              <rect x="28" y="38" width="8" height="3" rx="1.5" fill="#080812"/>
+              <rect x="30" y="12" width="4" height="8" rx="2" fill="currentColor"/>
+              <circle cx="32" cy="10" r="3" fill="currentColor"/>
+              <rect x="8"  y="28" width="6" height="10" rx="3" fill="currentColor"/>
+              <rect x="50" y="28" width="6" height="10" rx="3" fill="currentColor"/>
+            </svg>
+          </div>
+          <div class="chat-bubble chat-bubble--bot" [innerHTML]="item.message"></div>
+        </div>
+      }
+
+      <!-- User bubble -->
+      @if (item.type === 'customer') {
+        <div class="chat-row chat-row--user">
+          <div class="chat-bubble chat-bubble--user">{{ item.message }}</div>
+          <div class="chat-avatar chat-avatar--user">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+          </div>
+        </div>
+      }
+
+    }
+
+    <!-- ── Thinking indicator ── -->
+    @if (isThinking) {
+      <div class="chat-row chat-row--bot">
+        <div class="chat-avatar chat-avatar--bot">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+            <rect x="16" y="20" width="32" height="24" rx="6" fill="currentColor"/>
+            <rect x="22" y="27" width="8" height="7" rx="2" fill="#080812"/>
+            <rect x="34" y="27" width="8" height="7" rx="2" fill="#080812"/>
+            <rect x="28" y="38" width="8" height="3" rx="1.5" fill="#080812"/>
+            <rect x="30" y="12" width="4" height="8" rx="2" fill="currentColor"/>
+            <circle cx="32" cy="10" r="3" fill="currentColor"/>
+            <rect x="8"  y="28" width="6" height="10" rx="3" fill="currentColor"/>
+            <rect x="50" y="28" width="6" height="10" rx="3" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="chat-bubble chat-bubble--bot thinking-bubble">
+          <span class="thinking-label">MN.AI is thinking</span>
+          <span class="thinking-dots">
+            <span></span><span></span><span></span>
+          </span>
+        </div>
+      </div>
+    }
+
+  </div>
+
+  <!-- ── Quick Prompts (shown when empty) ── -->
+  @if (chatsArray.length <= 1) {
+    <div class="quick-prompts">
+      <p class="quick-prompts__label">// Quick questions</p>
+      <div class="quick-prompts__chips">
+        @for (q of quickPrompts; track q) {
+          <button class="quick-chip" (click)="sendQuick(q)">{{ q }}</button>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- ── Input ── -->
+  <div class="chatbot-input">
+    <div class="input-wrapper">
+      <input
+        type="text"
+        placeholder="Ask about Manav..."
+        [(ngModel)]="chatMessage"
+        (keydown)="onKeyDown($event)"
+        [disabled]="isThinking"
+      />
+    </div>
+    <button
+      aria-label="Send"
+      type="button"
+      (click)="chatWithAgent()"
+      [disabled]="isThinking || !chatMessage.trim()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Footer credit -->
+  <div class="chatbot-footer">
+    <span>Powered by</span>
+    <span class="chatbot-footer__brand">Azure AI + Grok</span>
+  </div>
+
+</div>
