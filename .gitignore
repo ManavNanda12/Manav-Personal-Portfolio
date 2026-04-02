@@ -1,5 +1,5 @@
 # =========================
-# Node / Angular
+# Node / Angular build
 # =========================
 node_modules/
 dist/
@@ -8,8 +8,8 @@ out-tsc/
 build/
 coverage/
 
-# Angular cache
-.angular/cache
+# Angular CLI cache (never commit this)
+.angular/
 
 # =========================
 # Logs
@@ -21,11 +21,9 @@ pnpm-debug.log*
 *.log
 
 # =========================
-# Environment files
+# Environment files (secrets)
 # =========================
 src/environments/environment*.ts
-
-# (OPTIONAL: keep example file)
 !src/environments/environment.example.ts
 
 # =========================
@@ -51,9 +49,4 @@ Thumbs.db
 *.bak
 *.tmp
 *.temp
-
-# =========================
-# Angular specific
-# =========================
-.angular/
 package-lock.json
