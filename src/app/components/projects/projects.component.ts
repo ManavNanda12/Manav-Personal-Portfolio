@@ -29,7 +29,7 @@ export class ProjectsComponent {
   active = 'All';
   filters = ['All', 'Personal', 'Company', 'Internship'];
 
-  all: Project[] = [
+ all: Project[] = [
     {
       title: 'Gecko Customer Portal',
       desc: 'A full-featured B2C e-Commerce platform with subscription tiers, Stripe payment, Google OAuth, Firebase push notifications, and an Azure-powered personalized chatbot that resolves customer queries with live database API data and Grok AI fallbacks.',
@@ -67,7 +67,7 @@ export class ProjectsComponent {
       category: 'Personal',
       badge: 'Personal',
       badgeClass: 'badge-personal',
-      liveUrl:'https://geckoadminportal.pages.dev/login',
+      liveUrl: 'https://geckoadminportal.pages.dev/login',
       githubUrl: 'https://github.com/ManavNanda12/GeckoAdminPortal/tree/master',
       emoji: '📊',
       bgGradient: 'linear-gradient(135deg,#1a0d0d,#0d1220)'
@@ -87,9 +87,28 @@ export class ProjectsComponent {
       category: 'Personal',
       badge: 'Personal',
       badgeClass: 'badge-personal',
-      githubUrl:'https://github.com/ManavNanda12/GeckoAPI',
+      githubUrl: 'https://github.com/ManavNanda12/GeckoAPI',
       emoji: '🧩',
       bgGradient: 'linear-gradient(135deg,#081f3d,#0b1730)'
+    },
+    {
+      title: 'MN.DEV — Developer Portfolio',
+      desc: 'This portfolio itself — a fully custom Angular SPA built from scratch with a dark futuristic design, AI-powered chatbot (MN.AI), EmailJS contact integration with custom dark-themed email templates, and a Cloudflare Worker backend connecting to Grok AI.',
+      tags: ['Angular', 'TypeScript', 'Cloudflare Workers', 'Grok AI', 'EmailJS', 'SCSS'],
+      highlights: [
+        'MN.AI chatbot powered by a Cloudflare Worker proxying Grok (LLaMA 3.3 70B) with a full system prompt covering all skills, projects, and experience',
+        'Conversation history maintained across turns so the AI remembers context within a session',
+        'EmailJS contact form with two custom dark-themed HTML email templates — notification to Manav and auto-reply to the sender',
+        'Dark futuristic design with custom cursor, scroll progress, marquee, and scroll-triggered reveal animations',
+        'Standalone Angular 17+ components with NgRx-free reactive patterns and IntersectionObserver-based animations',
+        'Fully responsive across mobile, tablet, and desktop'
+      ],
+      color: '#7c3aed',
+      category: 'Personal',
+      badge: 'Personal',
+      badgeClass: 'badge-personal',
+      emoji: '🚀',
+      bgGradient: 'linear-gradient(135deg,#120820,#0a0a1f 50%,#081520 100%)'
     },
     {
       title: 'B2B e-Commerce Platform',
