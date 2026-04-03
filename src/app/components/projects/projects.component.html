@@ -8,11 +8,7 @@
     </div>
 
     <div class="filter-bar reveal">
-      <button
-        *ngFor="let f of filters"
-        class="filter-btn"
-        [class.active]="active === f"
-        (click)="setFilter(f)">
+      <button *ngFor="let f of filters" class="filter-btn" [class.active]="active === f" (click)="setFilter(f)">
         {{ f }}
       </button>
     </div>
@@ -21,9 +17,7 @@
       <ng-container *ngFor="let p of filtered; let i = index; trackBy: trackByTitle">
 
         <!-- FEATURED card -->
-        <div *ngIf="p.featured"
-             class="project-card featured"
-             [style.animation-delay]="(i * 0.07) + 's'">
+        <div *ngIf="p.featured" class="project-card featured" [style.animation-delay]="(i * 0.07) + 's'">
           <div class="project-layout">
             <div class="project-img" [style.background]="p.bgGradient">
               <div class="project-img-inner">{{ p.emoji }}</div>
@@ -41,29 +35,43 @@
                 <span *ngFor="let t of p.tags" class="tag">{{ t }}</span>
               </div>
               <div class="project-links">
-                <a *ngIf="p.liveUrl" [href]="p.liveUrl" class="project-link" target="_blank">
+
+                <!-- Live Site button -->
+                <a *ngIf="p.liveUrl" [href]="p.liveUrl" target="_blank" rel="noopener" class="project-link">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
                   </svg>
                   Live Site
                 </a>
-                <a *ngIf="p.githubUrl" [href]="p.githubUrl" class="project-link" target="_blank">
+
+                <!-- GitHub button -->
+                <a *ngIf="p.githubUrl" [href]="p.githubUrl" target="_blank" rel="noopener" class="project-link">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    <path
+                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                   </svg>
                   GitHub
                 </a>
+
+                <!-- ✅ Watch Demo button — only shown when supademoId is set -->
+                <button *ngIf="p.supademoId" class="project-link project-link--demo" (click)="openDemo(p)"
+                  type="button">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none" />
+                  </svg>
+                  Watch Demo
+                </button>
+
               </div>
             </div>
           </div>
         </div>
 
         <!-- REGULAR card -->
-        <div *ngIf="!p.featured"
-             class="project-card"
-             [style.animation-delay]="(i * 0.07) + 's'">
+        <div *ngIf="!p.featured" class="project-card" [style.animation-delay]="(i * 0.07) + 's'">
           <div class="project-img" [style.background]="p.bgGradient">
             <div class="project-img-inner">{{ p.emoji }}</div>
             <div class="project-img-overlay"></div>
@@ -79,7 +87,7 @@
             <div class="project-stack">
               <span *ngFor="let t of p.tags" class="tag">{{ t }}</span>
             </div>
-            <div class="project-links" *ngIf="p.liveUrl || p.githubUrl">
+            <div class="project-links" *ngIf="p.liveUrl || p.githubUrl || p.supademoId">
               <a *ngIf="p.liveUrl" [href]="p.liveUrl" class="project-link" target="_blank">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -90,10 +98,19 @@
               </a>
               <a *ngIf="p.githubUrl" [href]="p.githubUrl" class="project-link" target="_blank">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                  <path
+                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                  </path>
                 </svg>
                 GitHub
               </a>
+              <button *ngIf="p.supademoId" class="project-link project-link--demo" (click)="openDemo(p)" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none" />
+                </svg>
+                Watch Demo
+              </button>
             </div>
           </div>
         </div>
@@ -107,4 +124,5 @@
       </div>
     </ng-template>
   </div>
+  <app-demo-modal></app-demo-modal>
 </section>

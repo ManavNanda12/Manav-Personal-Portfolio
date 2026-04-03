@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SupademoService } from '../../service/supa-demo.service';
+import { DemoModalComponent } from "../demo-modal/demo-modal.component";
 
 interface Project {
   title: string;
@@ -16,12 +18,13 @@ interface Project {
   githubUrl?: string;
   emoji: string;
   bgGradient: string;
+  supademoId?: string;
 }
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DemoModalComponent],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css']
 })
@@ -29,7 +32,21 @@ export class ProjectsComponent {
   active = 'All';
   filters = ['All', 'Personal', 'Company', 'Internship'];
 
- all: Project[] = [
+  constructor(private supademo: SupademoService) {}
+
+   ngOnInit() {
+    // Initialise the Supademo SDK after the view is ready
+    this.supademo.init();
+  }
+ 
+  /** Open Supademo modal for a project */
+  openDemo(project: Project) {
+    if (project.supademoId) {
+      this.supademo.openDemo(project.supademoId, project.title);
+    }
+  }
+ 
+  all: Project[] = [
     {
       title: 'Gecko Customer Portal',
       desc: 'A full-featured B2C e-Commerce platform with subscription tiers, Stripe payment, Google OAuth, Firebase push notifications, and an Azure-powered personalized chatbot that resolves customer queries with live database API data and Grok AI fallbacks.',
@@ -50,6 +67,7 @@ export class ProjectsComponent {
       featured: true,
       liveUrl: 'https://geckocustomerportal.onrender.com/home',
       githubUrl: 'https://github.com/ManavNanda12/GeckoCustomerPortal',
+      supademoId: 'cmnip3s770yuiabur5v9lbpot',  
       emoji: '🦎',
       bgGradient: 'linear-gradient(135deg,#0d1f1a 0%, #091420 50%, #160d1f 100%)'
     },
@@ -69,6 +87,7 @@ export class ProjectsComponent {
       badgeClass: 'badge-personal',
       liveUrl: 'https://geckoadminportal.pages.dev/login',
       githubUrl: 'https://github.com/ManavNanda12/GeckoAdminPortal/tree/master',
+      supademoId: 'cmniut4hv17gnaburnlvnlo88',      
       emoji: '📊',
       bgGradient: 'linear-gradient(135deg,#1a0d0d,#0d1220)'
     },
@@ -93,15 +112,15 @@ export class ProjectsComponent {
     },
     {
       title: 'MN.DEV — Developer Portfolio',
-      desc: 'This portfolio itself — a fully custom Angular SPA built from scratch with a dark futuristic design, AI-powered chatbot (MN.AI), EmailJS contact integration with custom dark-themed email templates, and a Cloudflare Worker backend connecting to Grok AI.',
+      desc: 'This portfolio itself — a fully custom Angular SPA with AI-powered chatbot (MN.AI), EmailJS contact integration with custom dark-themed email templates, and a Cloudflare Worker backend connecting to Grok AI.',
       tags: ['Angular', 'TypeScript', 'Cloudflare Workers', 'Grok AI', 'EmailJS', 'SCSS'],
       highlights: [
-        'MN.AI chatbot powered by a Cloudflare Worker proxying Grok (LLaMA 3.3 70B) with a full system prompt covering all skills, projects, and experience',
-        'Conversation history maintained across turns so the AI remembers context within a session',
-        'EmailJS contact form with two custom dark-themed HTML email templates — notification to Manav and auto-reply to the sender',
-        'Dark futuristic design with custom cursor, scroll progress, marquee, and scroll-triggered reveal animations',
-        'Standalone Angular 17+ components with NgRx-free reactive patterns and IntersectionObserver-based animations',
-        'Fully responsive across mobile, tablet, and desktop'
+        'MN.AI chatbot powered by a Cloudflare Worker proxying Grok (LLaMA 3.3 70B)',
+        'Conversation history maintained across turns for contextual AI responses',
+        'EmailJS contact form with two custom dark-themed HTML email templates',
+        'Dark futuristic design with custom cursor, scroll progress, marquee, and reveal animations',
+        'Standalone Angular 17+ components, IntersectionObserver-based animations',
+        'Supademo in-app demo integration for live project showcases'
       ],
       color: '#7c3aed',
       category: 'Personal',
@@ -130,7 +149,7 @@ export class ProjectsComponent {
     },
     {
       title: 'Enterprise Web Applications (×9)',
-      desc: 'Built 9+ enterprise web applications at Shaligram Infotech using Angular, .NET Core Web API, AI/chatbot workflows, Stripe integration, and Angular Ionic portals. Projects included fitness management, pregnancy task tracking, kiosk/admin portals, and API handler systems.',
+      desc: 'Built 9+ enterprise web applications at Shaligram Infotech using Angular, .NET Core Web API, AI/chatbot workflows, Stripe integration, and Angular Ionic portals.',
       tags: ['Angular', '.NET Core', 'Web API', 'AI', 'Chatbot', 'Stripe', 'Ionic', 'SQL Server', 'Redis', 'AWS'],
       highlights: [
         'Delivered customer/admin/API portals for fitness management, pregnancy task tracking, kiosk machine administration, and analytics dashboards',

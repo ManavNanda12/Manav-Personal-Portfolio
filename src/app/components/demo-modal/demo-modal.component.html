@@ -1,0 +1,72 @@
+@if (isOpen) {
+  <!-- Backdrop -->
+  <div
+    class="demo-backdrop"
+    [@backdropFade]
+    (click)="close()">
+  </div>
+
+  <!-- Modal panel -->
+  <div class="demo-modal" [@modalSlide] (click)="$event.stopPropagation()">
+
+    <!-- ── Header ── -->
+    <div class="demo-modal__header">
+
+      <div class="demo-modal__meta">
+        <span class="demo-modal__eyebrow">// Live Demo</span>
+        <h3 class="demo-modal__title">{{ currentTitle }}</h3>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="demo-modal__progress-wrap" *ngIf="totalSlides > 0">
+        <div class="demo-modal__progress-track">
+          <div
+            class="demo-modal__progress-fill"
+            [style.width.%]="progressPct">
+          </div>
+        </div>
+        <span class="demo-modal__slide-count">
+          {{ currentSlide }} / {{ totalSlides }}
+        </span>
+      </div>
+
+      <!-- Close button -->
+      <button class="demo-modal__close" (click)="close()" aria-label="Close demo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6"  y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- ── iframe ── -->
+    <div class="demo-modal__iframe-wrap">
+      <!-- Loading skeleton shown while iframe loads -->
+      <div class="demo-modal__skeleton" *ngIf="isLoading">
+        <div class="skeleton-pulse"></div>
+        <p class="skeleton-text">Loading demo...</p>
+      </div>
+
+      <iframe
+        [src]="safeUrl"
+        [class.demo-modal__iframe--loaded]="!isLoading"
+        (load)="onIframeLoad()"
+        allow="fullscreen"
+        frameborder="0"
+        title="Product demo">
+      </iframe>
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="demo-modal__footer">
+      <span class="demo-modal__footer-left">
+        Press <kbd>ESC</kbd> to close
+      </span>
+      <span class="demo-modal__footer-brand">
+        Powered by <span class="brand-highlight">Supademo</span>
+      </span>
+    </div>
+
+  </div>
+}

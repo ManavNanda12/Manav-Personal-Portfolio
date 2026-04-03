@@ -253,3 +253,27 @@
     grid-template-columns: 1fr;
   }
 }
+
+.project-link--demo {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Space Mono', monospace;
+  color: #a78bfa;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.project-link--demo:hover {
+  color: #7c3aed;
+}
+
+.project-link--demo svg {
+  width: 14px;
+  height: 14px;
+}
