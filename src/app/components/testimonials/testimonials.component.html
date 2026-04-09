@@ -1,0 +1,79 @@
+<section id="testimonials" class="testimonials-section">
+  <div class="section-inner">
+
+    <div class="section-header reveal">
+      <span class="section-eyebrow">// Social Proof</span>
+      <h2 class="section-title">What People <em>Say</em></h2>
+      <div class="divider"></div>
+      <p class="section-desc">Recommendations from colleagues and managers I've had the privilege of working with.</p>
+    </div>
+
+    <div class="testimonials-carousel reveal">
+
+      <!-- Quote icon -->
+      <div class="quote-icon">"</div>
+
+      <!-- Cards track -->
+      <div class="cards-track">
+        <div
+          *ngFor="let t of testimonials; let i = index"
+          class="testimonial-card"
+          [class.active]="i === activeIndex"
+          [class.prev]="i === (activeIndex - 1 + testimonials.length) % testimonials.length"
+          [class.next]="i === (activeIndex + 1) % testimonials.length">
+
+          <p class="testimonial-text">{{ t.text }}</p>
+
+          <div class="testimonial-author">
+            <div class="author-avatar">{{ t.avatar }}</div>
+            <div class="author-meta">
+              <span class="author-name">{{ t.name }}</span>
+              <span class="author-role">{{ t.role }} · {{ t.company }}</span>
+              <span class="author-relation">{{ t.relation }}</span>
+            </div>
+            <a [href]="t.linkedin" target="_blank" rel="noopener noreferrer"
+               class="linkedin-badge" title="View on LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="carousel-controls">
+        <button class="ctrl-btn" (click)="prev()" aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="dots">
+          <button
+            *ngFor="let t of testimonials; let i = index"
+            class="dot"
+            [class.dot--active]="i === activeIndex"
+            (click)="goTo(i)"
+            [attr.aria-label]="'Go to testimonial ' + (i + 1)">
+          </button>
+        </div>
+
+        <button class="ctrl-btn" (click)="next()" aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- LinkedIn CTA -->
+    <div class="linkedin-cta reveal">
+      <p class="cta-label">See all recommendations on</p>
+      <a href="https://linkedin.com/in/manav-nanda" target="_blank" rel="noopener noreferrer" class="linkedin-btn">
+        <i class="fab fa-linkedin"></i>
+        LinkedIn Profile
+      </a>
+    </div>
+
+  </div>
+</section>

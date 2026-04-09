@@ -1,83 +1,80 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { environment } from '../../../environments/environment';
-import emailjs from 'emailjs-com';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,ToastrModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent {
   contactUsform!: FormGroup;
   submitted = false;
-  showToast = false;
+
+  // ✅ Make.com webhook URL
+  private readonly MAKE_WEBHOOK = 'https://hook.eu1.make.com/rf2qrx84w373k4l2nd8nvrvkxlyveuse';
+
   contacts = [
-    { iconClass: 'fa-solid fa-phone', label: 'Phone', value: '+91 878 016 0945', href: 'tel:+918780160945' },
-    { iconClass: 'fa-solid fa-envelope', label: 'Email', value: 'manavnanda2404@gmail.com', href: 'mailto:manavnanda2404@gmail.com' },
+    { iconClass: 'fa-solid fa-phone',       label: 'Phone',                     value: '+91 878 016 0945',          href: 'tel:+918780160945' },
+    { iconClass: 'fa-solid fa-envelope',     label: 'Email',                     value: 'manavnanda2404@gmail.com',  href: 'mailto:manavnanda2404@gmail.com' },
     { iconClass: 'fa-solid fa-location-dot', label: 'Location — Open to Remote', value: 'Ahmedabad, Gujarat, India', href: '' },
-    { iconClass: 'fa-brands fa-linkedin-in', label: 'Connect professionally', value: 'LinkedIn Profile', href: 'https://linkedin.com/in/manav-nanda' }
+    { iconClass: 'fa-brands fa-linkedin-in', label: 'Connect professionally',     value: 'LinkedIn Profile',          href: 'https://linkedin.com/in/manav-nanda' }
   ];
 
-  constructor(private readonly formBuilder: FormBuilder, private readonly toastr: ToastrService) {
-    emailjs.init(environment.emailjs.publicKey);
-    this.contactUsform = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly toastr: ToastrService
+  ) {
+    this.contactUsform = this.fb.group({
+      name:    ['', [Validators.required, Validators.minLength(2)]],
+      email:   ['', [Validators.required, Validators.email]],
       subject: ['', [Validators.required, Validators.minLength(5)]],
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
 
-  onSubmit() {
-  if (!this.contactUsform.valid){
-    this.toastr.error('Please fill out all fields correctly before submitting.', 'Form Error');
-    return;
-  };
+  async onSubmit() {
+    if (this.contactUsform.invalid) {
+      this.contactUsform.markAllAsTouched();
+      this.toastr.error('Please fill out all fields correctly.', 'Form Error');
+      return;
+    }
 
-  this.showToast = true;
-  this.submitted = true;
+    this.submitted = true;
 
-  const formValue = this.contactUsform.value;
+    const { name, email, subject, message } = this.contactUsform.value;
 
-  const templateParams = {
-    from_name: formValue.name,
-    from_email: formValue.email,
-    subject: formValue.subject,
-    message: formValue.message
-  };
+    try {
+      const response = await fetch(this.MAKE_WEBHOOK, {
+        method: 'POST',
+        // ✅ Make.com supports application/json — use it directly
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message })
+      });
 
-  // 1️⃣ Send email to YOU
-  emailjs.send(
-    environment.emailjs.serviceId,
-    environment.emailjs.contactUstemplateId,
-    templateParams,
-    environment.emailjs.publicKey
-  )
-  .then(() => {
+      // Make returns "Accepted" (200) when it receives the webhook
+      if (response.ok) {
+        this.toastr.success('Message sent! Manav will get back to you soon.', 'Sent ✓');
+        this.contactUsform.reset();
+      } else {
+        throw new Error(`Make webhook responded with ${response.status}`);
+      }
 
-    // 2️⃣ Send auto-reply to USER
-    return emailjs.send(
-      environment.emailjs.serviceId,
-      environment.emailjs.replyBackTemplateId,
-      templateParams,
-      environment.emailjs.publicKey
-    );
+    } catch (error) {
+      console.error('Make webhook error:', error);
+      this.toastr.error('Something went wrong. Please email directly.', 'Error');
 
-  })
-  .then(() => {
-    this.showToast = false;
-    this.submitted = false;
-    this.contactUsform.reset();
-  })
-  .catch((error) => {
-    console.error(error);
-    this.showToast = false;
-    this.submitted = false;
-  });
-}
+    } finally {
+      this.submitted = false;
+    }
+  }
 }

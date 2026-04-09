@@ -1,0 +1,260 @@
+.testimonials-section {
+  padding: 120px 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Carousel wrapper ── */
+.testimonials-carousel {
+  position: relative;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+/* ── Giant quote mark ── */
+.quote-icon {
+  font-family: 'Syne', sans-serif;
+  font-size: 8rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(124, 58, 237, 0.12);
+  position: absolute;
+  top: -2rem;
+  left: -1rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Cards track ── */
+.cards-track {
+  position: relative;
+  min-height: 320px;
+}
+
+/* ── Individual card ── */
+.testimonial-card {
+  position: absolute;
+  inset: 0;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.8rem;
+  opacity: 0;
+  transform: translateX(40px) scale(0.97);
+  transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1),
+              transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+}
+
+.testimonial-card.prev {
+  transform: translateX(-40px) scale(0.97);
+}
+
+.testimonial-card.active {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+  position: relative;
+  inset: auto;
+}
+
+/* Accent bottom bar */
+.testimonial-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 0 0 12px 12px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.testimonial-card.active::after {
+  opacity: 1;
+}
+
+/* ── Testimonial text ── */
+.testimonial-text {
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 2;
+  font-style: italic;
+  flex: 1;
+}
+
+/* ── Author row ── */
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.05em;
+}
+
+.author-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.author-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.author-role {
+  font-size: 0.72rem;
+  color: var(--accent2);
+  letter-spacing: 0.03em;
+}
+
+.author-relation {
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+/* ── LinkedIn icon on card ── */
+.linkedin-badge {
+  color: var(--muted);
+  font-size: 1.4rem;
+  text-decoration: none;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+.linkedin-badge:hover { color: #0a66c2; }
+
+/* ── Carousel controls ── */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+.ctrl-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.ctrl-btn svg { width: 18px; height: 18px; }
+.ctrl-btn:hover {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+
+/* ── Dots ── */
+.dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+.dot--active {
+  background: var(--accent2);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ── LinkedIn CTA ── */
+.linkedin-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 3.5rem;
+}
+
+.cta-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.linkedin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 6px;
+  background: rgba(10, 102, 194, 0.1);
+  border: 1px solid rgba(10, 102, 194, 0.3);
+  color: #4a9fd5;
+  font-size: 0.78rem;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.linkedin-btn:hover {
+  background: rgba(10, 102, 194, 0.2);
+  border-color: rgba(10, 102, 194, 0.6);
+  color: #fff;
+}
+.linkedin-btn i { font-size: 1rem; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .testimonial-card {
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .quote-icon {
+    font-size: 5rem;
+    top: -1rem;
+    left: -0.5rem;
+  }
+
+  .linkedin-cta {
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .testimonial-text { font-size: 0.82rem; }
+  .author-avatar { width: 40px; height: 40px; font-size: 0.75rem; }
+}
