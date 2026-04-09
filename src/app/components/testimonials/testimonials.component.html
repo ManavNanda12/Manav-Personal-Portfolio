@@ -32,7 +32,7 @@
               <span class="author-relation">{{ t.relation }}</span>
             </div>
             <a [href]="t.linkedin" target="_blank" rel="noopener noreferrer"
-               class="linkedin-badge" title="View on LinkedIn">
+               class="linkedin-badge" [attr.aria-label]="'View ' + t.name + ' on LinkedIn'">
               <i class="fab fa-linkedin"></i>
             </a>
           </div>
