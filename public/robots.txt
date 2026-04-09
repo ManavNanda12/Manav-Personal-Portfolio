@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://manav-personal-portfolio.pages.dev/sitemap.xml

@@ -20,8 +20,9 @@ export class NavComponent implements OnInit, OnDestroy {
     { href: '#about',     label: 'About',      id: 'about'     },
     { href: '#companies', label: 'Experience', id: 'companies' },
     { href: '#projects',  label: 'Projects',   id: 'projects'  },
-    { href: '#services',  label: 'Services',   id: 'services'  },
-    { href: '#contact',   label: 'Contact',    id: 'contact'   }
+    { href: '#services',      label: 'Services',      id: 'services'      },
+    { href: '#testimonials',  label: 'Testimonials',  id: 'testimonials'  },
+    { href: '#contact',       label: 'Contact',       id: 'contact'       }
   ];
 
   ngOnInit() {

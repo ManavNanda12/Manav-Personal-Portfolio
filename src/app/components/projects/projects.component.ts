@@ -112,14 +112,14 @@ export class ProjectsComponent {
     },
     {
       title: 'MN.DEV — Developer Portfolio',
-      desc: 'This portfolio itself — a fully custom Angular SPA with AI-powered chatbot (MN.AI), EmailJS contact integration with custom dark-themed email templates, and a Cloudflare Worker backend connecting to Grok AI.',
-      tags: ['Angular', 'TypeScript', 'Cloudflare Workers', 'Grok AI', 'EmailJS', 'SCSS'],
+      desc: 'This portfolio itself — a fully custom Angular SPA with AI-powered chatbot (MN.AI), Make.com webhook contact pipeline, and a Cloudflare Worker backend connecting to Grok AI.',
+      tags: ['Angular', 'TypeScript', 'Cloudflare Workers', 'Grok AI', 'Make.com', 'SCSS'],
       highlights: [
         'MN.AI chatbot powered by a Cloudflare Worker proxying Grok (LLaMA 3.3 70B)',
         'Conversation history maintained across turns for contextual AI responses',
-        'EmailJS contact form with two custom dark-themed HTML email templates',
+        'Migrated contact form from EmailJS to a Make.com webhook pipeline — mail delivery dropped from ~4s to under 800ms, with custom branded HTML email templates',
         'Dark futuristic design with custom cursor, scroll progress, marquee, and reveal animations',
-        'Standalone Angular 17+ components, IntersectionObserver-based animations',
+        'Standalone Angular 19 components, IntersectionObserver-based animations',
         'Supademo in-app demo integration for live project showcases'
       ],
       color: '#7c3aed',
@@ -153,6 +153,8 @@ export class ProjectsComponent {
       tags: ['Angular', '.NET Core', 'Web API', 'AI', 'Chatbot', 'Stripe', 'Ionic', 'SQL Server', 'Redis', 'AWS'],
       highlights: [
         'Delivered customer/admin/API portals for fitness management, pregnancy task tracking, kiosk machine administration, and analytics dashboards',
+        'Implemented Redis caching on high-traffic API endpoints — cut average response time by ~60% and reduced database load significantly',
+        'Replaced EmailJS with Make.com webhook pipelines for contact/notification flows — dropped mail delivery time from ~4s to under 800ms with zero cold-start issues',
         'Integrated chatbot flows, Stripe payment systems, and AI-enabled workflows',
         'Hosted applications across Netlify, Render, and Cloudflare for global availability'
       ],

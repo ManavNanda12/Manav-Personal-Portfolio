@@ -22,7 +22,8 @@ import { CertificationsComponent } from './components/certifications/certificati
 import { ServicesComponent }       from './components/services/services.component';
 import { ContactComponent }        from './components/contact/contact.component';
 import { FooterComponent }         from './components/footer/footer.component';
-import { ChatbotComponent } from './components/chat-bot/chat-bot.component';
+import { ChatbotComponent }        from './components/chat-bot/chat-bot.component';
+import { TestimonialsComponent }   from './components/testimonials/testimonials.component';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +40,8 @@ import { ChatbotComponent } from './components/chat-bot/chat-bot.component';
     ServicesComponent,
     ContactComponent,
     FooterComponent,
-    ChatbotComponent
+    ChatbotComponent,
+    TestimonialsComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
