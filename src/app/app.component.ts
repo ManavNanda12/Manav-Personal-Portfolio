@@ -177,6 +177,6 @@ export class AppComponent implements OnInit, OnDestroy {
       referrer: document.referrer || 'Direct'
     };
     console.log('Tracking visitor:', payload);
-    this.http.post('https://manav022.app.n8n.cloud/webhook-test/7d7042b5-e23b-4074-a223-869c1fb33583', payload).subscribe();
+    this.http.post('https://manav022.app.n8n.cloud/webhook/7d7042b5-e23b-4074-a223-869c1fb33583', payload).subscribe();
   }
 }
