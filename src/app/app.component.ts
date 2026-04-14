@@ -24,6 +24,7 @@ import { ContactComponent }        from './components/contact/contact.component'
 import { FooterComponent }         from './components/footer/footer.component';
 import { ChatbotComponent }        from './components/chat-bot/chat-bot.component';
 import { TestimonialsComponent }   from './components/testimonials/testimonials.component';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -61,6 +62,8 @@ import { TestimonialsComponent }   from './components/testimonials/testimonials.
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  constructor(private http: HttpClient) {}
+
   // ── Scroll & back-to-top ──
   scrollProgress = 0;
   showBackToTop  = false;
@@ -85,6 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.animateCursor();
     this.initReveal();
+    this.trackVisitor();
   }
 
   ngOnDestroy() {
@@ -163,5 +167,16 @@ export class AppComponent implements OnInit, OnDestroy {
   showSuccessToast() {
     this.showToast = true;
     setTimeout(() => { this.showToast = false; }, 4000);
+  }
+
+  private trackVisitor(): void {
+    const payload = {
+      page: window.location.pathname,
+      device: navigator.userAgent,
+      time: new Date().toLocaleString(),
+      referrer: document.referrer || 'Direct'
+    };
+    console.log('Tracking visitor:', payload);
+    this.http.post('https://manav022.app.n8n.cloud/webhook-test/7d7042b5-e23b-4074-a223-869c1fb33583', payload).subscribe();
   }
 }
