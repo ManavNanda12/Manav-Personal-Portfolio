@@ -2,10 +2,13 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  HostListener
+  HostListener,
+  PLATFORM_ID,
+  inject,
+  Inject
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { RouterOutlet }                    from '@angular/router';
 import {
   trigger,
   style,
@@ -25,7 +28,8 @@ import { ContactComponent }        from './components/contact/contact.component'
 import { FooterComponent }         from './components/footer/footer.component';
 import { ChatbotComponent }        from './components/chat-bot/chat-bot.component';
 import { TestimonialsComponent }   from './components/testimonials/testimonials.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient }              from '@angular/common/http';
+import { SeoService }              from './services/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -64,26 +68,31 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  constructor(private http: HttpClient) {}
+  private readonly platformId = inject(PLATFORM_ID);
+  private readonly isBrowser  = isPlatformBrowser(this.platformId);
+
+  constructor(
+    private http:       HttpClient,
+    private seoService: SeoService,
+    @Inject(DOCUMENT) private doc: Document
+  ) {}
 
   // ── Scroll & back-to-top ──
   scrollProgress = 0;
   showBackToTop  = false;
 
   // ── Cursor ──
-  cursorX      = -100;
-  cursorY      = -100;
-  ringX        = -100;
-  ringY        = -100;
+  cursorX       = -100;
+  cursorY       = -100;
+  ringX         = -100;
+  ringY         = -100;
   isCursorHover = false;
-  private mx   = -100;
-  private my   = -100;
+  private mx    = -100;
+  private my    = -100;
   private rafId = 0;
 
-  // ── Toast ──
-  showToast = false;
-
-  // ── Chatbot ──
+  // ── Toast / chatbot ──
+  showToast  = false;
   isChatOpen = false;
 
   // Route path → section element ID
@@ -97,45 +106,33 @@ export class AppComponent implements OnInit, OnDestroy {
     'contact':      'contact'
   };
 
-  // ─────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
   ngOnInit() {
-    this.animateCursor();
-    this.initReveal();
-    this.trackVisitor();
-    this.scrollToInitialSection();
-  }
+    // Runs on BOTH server and browser — gives prerendered pages correct meta.
+    // Use doc.location.pathname (not router.url) because router.url is '/' for
+    // all routes at ngOnInit time during SSR prerendering.
+    this.seoService.syncMetaByPath(this.doc.location.pathname);
 
-  // Scroll to the section that matches the URL on first load
-  private scrollToInitialSection() {
-    const path = window.location.pathname.replace(/^\//, '').split('/')[0];
-    if (!path) return; // already at hero / top
-    const sectionId = this.routeToSection[path];
-    if (!sectionId) return;
-    // Wait for all components to render before scrolling
-    setTimeout(() => {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-    }, 250);
-  }
-
-  // Handle browser back / forward when nav used Location.replaceState
-  @HostListener('window:popstate')
-  onPopState() {
-    const path = window.location.pathname.replace(/^\//, '').split('/')[0];
-    const sectionId = this.routeToSection[path] ?? 'hero';
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    // Browser-only initialisation
+    if (this.isBrowser) {
+      this.animateCursor();
+      this.initReveal();
+      this.trackVisitor();
+      this.scrollToInitialSection();
+    }
   }
 
   ngOnDestroy() {
-    cancelAnimationFrame(this.rafId);
+    if (this.isBrowser) cancelAnimationFrame(this.rafId);
   }
 
-  // ── Scroll handler ──
+  // ── Scroll progress + back-to-top (HostListeners are no-ops on server) ──
   @HostListener('window:scroll')
   onScroll() {
-    const scrolled = window.scrollY;
-    const total    = document.body.scrollHeight - window.innerHeight;
-    this.scrollProgress = total > 0 ? (scrolled / total) * 100 : 0;
-    this.showBackToTop  = scrolled > 400;
+    const scrolled        = window.scrollY;
+    const total           = document.body.scrollHeight - window.innerHeight;
+    this.scrollProgress   = total > 0 ? (scrolled / total) * 100 : 0;
+    this.showBackToTop    = scrolled > 400;
   }
 
   // ── Mouse position ──
@@ -146,7 +143,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.cursorX = e.clientX;
     this.cursorY = e.clientY;
 
-    // Detect hover over interactive elements → enlarge ring
     const target = e.target as HTMLElement;
     this.isCursorHover = !!target.closest(
       'a, button, .skill-card, .project-card, .service-card, ' +
@@ -154,14 +150,22 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  // ── Smooth ring lerp ──
+  // ── Browser back / forward ──
+  @HostListener('window:popstate')
+  onPopState() {
+    const path      = window.location.pathname.replace(/^\//, '').split('/')[0];
+    const sectionId = this.routeToSection[path] ?? 'hero';
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ── Smooth cursor ring (rAF loop — browser only) ──
   private animateCursor() {
-    const animate = () => {
+    const loop = () => {
       this.ringX += (this.mx - this.ringX) * 0.18;
       this.ringY += (this.my - this.ringY) * 0.18;
-      this.rafId  = requestAnimationFrame(animate);
+      this.rafId  = requestAnimationFrame(loop);
     };
-    this.rafId = requestAnimationFrame(animate);
+    this.rafId = requestAnimationFrame(loop);
   }
 
   // ── IntersectionObserver for .reveal elements ──
@@ -180,37 +184,47 @@ export class AppComponent implements OnInit, OnDestroy {
       document.querySelectorAll('.reveal').forEach(el => {
         const rect = el.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-          el.classList.add('visible');   // already in viewport — instant
+          el.classList.add('visible');
         } else {
           observer.observe(el);
         }
       });
     };
 
-    // Two passes: initial + after heavy components finish rendering
     setTimeout(attach, 50);
     setTimeout(attach, 400);
   }
 
-  // ── Chatbot toggle ──
-  toggleChat() {
-    this.isChatOpen = !this.isChatOpen;
+  // ── Scroll to section matching current URL on first load ──
+  private scrollToInitialSection() {
+    const path      = window.location.pathname.replace(/^\//, '').split('/')[0];
+    if (!path) return;
+    const sectionId = this.routeToSection[path];
+    if (!sectionId) return;
+    setTimeout(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }, 250);
   }
 
-  // ── Toast helper (call from ContactComponent via service/event if needed) ──
+  // ── Visitor tracking (browser only — needs window/navigator/document) ──
+  private trackVisitor(): void {
+    const payload = {
+      page:     window.location.pathname,
+      device:   navigator.userAgent,
+      time:     new Date().toLocaleString(),
+      referrer: document.referrer || 'Direct'
+    };
+    this.http.post(
+      'https://manav022.app.n8n.cloud/webhook/7d7042b5-e23b-4074-a223-869c1fb33583',
+      payload
+    ).subscribe();
+  }
+
+  // ── Chatbot / toast ──
+  toggleChat() { this.isChatOpen = !this.isChatOpen; }
+
   showSuccessToast() {
     this.showToast = true;
     setTimeout(() => { this.showToast = false; }, 4000);
-  }
-
-  private trackVisitor(): void {
-    const payload = {
-      page: window.location.pathname,
-      device: navigator.userAgent,
-      time: new Date().toLocaleString(),
-      referrer: document.referrer || 'Direct'
-    };
-    console.log('Tracking visitor:', payload);
-    this.http.post('https://manav022.app.n8n.cloud/webhook/7d7042b5-e23b-4074-a223-869c1fb33583', payload).subscribe();
   }
 }

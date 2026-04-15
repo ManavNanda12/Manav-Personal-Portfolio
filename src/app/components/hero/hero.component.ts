@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, PLATFORM_ID, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser }                    from '@angular/common';
 
 @Component({
   selector: 'app-hero',
@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./hero.component.css']
 })
 export class HeroComponent implements OnInit, OnDestroy {
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
   typedText = '';
-  yearsExp = '';
+  yearsExp  = '';
 
   private roles = ['Full-Stack Developer', '.NET Core Expert', 'Angular Developer', 'Cloud & AWS Builder', 'API Architect'];
   private ri = 0;
@@ -20,7 +22,10 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.yearsExp = this.calcExperience();
-    this.timeoutId = setTimeout(() => this.type(), 800);
+    // Guard: recursive setTimeout loop prevents Angular from ever stabilising on the server
+    if (this.isBrowser) {
+      this.timeoutId = setTimeout(() => this.type(), 800);
+    }
   }
 
   ngOnDestroy() {

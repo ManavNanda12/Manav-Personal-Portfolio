@@ -1,0 +1,7 @@
+/
+/about
+/experience
+/projects
+/services
+/testimonials
+/contact

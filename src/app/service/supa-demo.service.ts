@@ -1,5 +1,6 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, OnDestroy, PLATFORM_ID, inject } from '@angular/core';
+import { isPlatformBrowser }                           from '@angular/common';
+import { Subject }                                     from 'rxjs';
 
 // ── Supademo event shapes (from Embed Events API docs) ──
 export interface SupademoLoadPayload    { demoId: string; title: string; totalSlides: number; }
@@ -55,12 +56,19 @@ export class SupademoService implements OnDestroy {
     }
   };
 
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
   constructor() {
-    window.addEventListener('message', this.messageHandler);
+    // window does not exist on the server — guard for SSR prerendering
+    if (this.isBrowser) {
+      window.addEventListener('message', this.messageHandler);
+    }
   }
 
   ngOnDestroy() {
-    window.removeEventListener('message', this.messageHandler);
+    if (this.isBrowser) {
+      window.removeEventListener('message', this.messageHandler);
+    }
     this.events$.complete();
     this.modalOpen$.complete();
   }
