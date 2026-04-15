@@ -4,7 +4,9 @@
   <!-- Desktop links -->
   <ul class="nav-links">
     <li *ngFor="let link of links">
-      <a [href]="link.href" [class.active]="activeSection === link.id">
+      <a [href]="link.href"
+         [class.active]="activeSection === link.id"
+         (click)="handleNavClick($event, link)">
         {{ link.label }}
         <span class="underline"></span>
       </a>
@@ -24,7 +26,7 @@
       <li *ngFor="let link of links">
         <a [href]="link.href"
            [class.active]="activeSection === link.id"
-           (click)="closeMenu()">
+           (click)="handleNavClick($event, link)">
           {{ link.label }}
         </a>
       </li>

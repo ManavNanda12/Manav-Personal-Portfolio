@@ -5,6 +5,7 @@ import {
   HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import {
   trigger,
   style,
@@ -31,6 +32,7 @@ import { HttpClient } from '@angular/common/http';
   standalone: true,
   imports: [
     CommonModule,
+    RouterOutlet,
     NavComponent,
     HeroComponent,
     MarqueeComponent,
@@ -84,11 +86,43 @@ export class AppComponent implements OnInit, OnDestroy {
   // ── Chatbot ──
   isChatOpen = false;
 
+  // Route path → section element ID
+  private readonly routeToSection: Record<string, string> = {
+    '':             'hero',
+    'about':        'about',
+    'experience':   'companies',
+    'projects':     'projects',
+    'services':     'services',
+    'testimonials': 'testimonials',
+    'contact':      'contact'
+  };
+
   // ─────────────────────────────────────────
   ngOnInit() {
     this.animateCursor();
     this.initReveal();
     this.trackVisitor();
+    this.scrollToInitialSection();
+  }
+
+  // Scroll to the section that matches the URL on first load
+  private scrollToInitialSection() {
+    const path = window.location.pathname.replace(/^\//, '').split('/')[0];
+    if (!path) return; // already at hero / top
+    const sectionId = this.routeToSection[path];
+    if (!sectionId) return;
+    // Wait for all components to render before scrolling
+    setTimeout(() => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    }, 250);
+  }
+
+  // Handle browser back / forward when nav used Location.replaceState
+  @HostListener('window:popstate')
+  onPopState() {
+    const path = window.location.pathname.replace(/^\//, '').split('/')[0];
+    const sectionId = this.routeToSection[path] ?? 'hero';
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
   }
 
   ngOnDestroy() {
