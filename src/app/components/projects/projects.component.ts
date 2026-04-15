@@ -1,5 +1,5 @@
-import { Component, PLATFORM_ID, inject } from '@angular/core';
-import { CommonModule, isPlatformBrowser }  from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { SupademoService } from '../../service/supa-demo.service';
 import { DemoModalComponent } from "../demo-modal/demo-modal.component";
 
@@ -32,16 +32,9 @@ export class ProjectsComponent {
   active = 'All';
   filters = ['All', 'Personal', 'Company', 'Internship'];
 
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-
   constructor(private supademo: SupademoService) {}
 
-  ngOnInit() {
-    // Supademo SDK needs window — skip on server during prerender
-    if (this.isBrowser) {
-      this.supademo.init();
-    }
-  }
+  ngOnInit() {}
  
   /** Open Supademo modal for a project */
   openDemo(project: Project) {
