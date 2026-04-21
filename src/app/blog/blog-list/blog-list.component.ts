@@ -5,12 +5,11 @@ import {
   inject
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router }         from '@angular/router';
-import { Title, Meta }    from '@angular/platform-browser';
-import { BlogPost }       from '../blog.model';
-import { BlogService }    from '../blog.service';
-import { SKELETON_POSTS } from '../blogs.data';
-import { ThemeService }   from '../../services/theme.service';
+import { Router }      from '@angular/router';
+import { Title, Meta } from '@angular/platform-browser';
+import { BlogPost }    from '../blog.model';
+import { BlogService } from '../blog.service';
+import { ThemeService }from '../../services/theme.service';
 
 @Component({
   selector: 'app-blog-list',
@@ -23,8 +22,10 @@ export class BlogListComponent implements OnInit {
 
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  posts: BlogPost[]    = [];
-  skeletons = SKELETON_POSTS;
+  posts:     BlogPost[] = [];
+  skeletons             = this.blogService.getSkeletonPosts();
+  loading               = true;
+  error                 = false;
 
   constructor(
     private blogService:  BlogService,
@@ -41,7 +42,6 @@ export class BlogListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.posts = this.blogService.getAll();
     this.title.setTitle('Blog | Manav Nanda');
     this.meta.updateTag({
       name: 'description',
@@ -49,11 +49,20 @@ export class BlogListComponent implements OnInit {
     });
 
     if (this.isBrowser) {
-      // Scroll to top on page load
       window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-      // Trigger reveal observer after render
-      setTimeout(() => this.initReveal(), 60);
     }
+
+    this.blogService.getPosts().subscribe({
+      next: posts => {
+        this.posts   = posts;
+        this.loading = false;
+        if (this.isBrowser) setTimeout(() => this.initReveal(), 60);
+      },
+      error: () => {
+        this.loading = false;
+        this.error   = true;
+      }
+    });
   }
 
   navigate(post: BlogPost) {

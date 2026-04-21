@@ -1,4 +1,10 @@
-<div class="blog-detail-page" *ngIf="post; else notFoundTpl">
+<!-- ── Loading state ── -->
+<div class="blog-detail-loading" *ngIf="loading">
+  <div class="loading-spinner"></div>
+</div>
+
+<!-- ── Post ── -->
+<div class="blog-detail-page" *ngIf="!loading && post">
 
   <!-- ── Hero / Cover ── -->
   <div class="detail-hero" [style.background]="heroBackground">
@@ -19,6 +25,10 @@
         <span class="meta-date">{{ formatDate(post.date) }}</span>
         <span class="meta-sep">·</span>
         <span class="meta-read">{{ post.readTime }} min read</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-views">👁 {{ post.views }} views</span>
+        <span class="meta-sep">·</span>
+        <span class="meta-likes">♥ {{ likeCount }}</span>
       </div>
 
       <h1 class="hero-title">{{ post.title }}</h1>
@@ -104,10 +114,11 @@
       <!-- Like -->
       <button class="like-btn"
               [class.liked]="isLiked"
+              [disabled]="likeInFlight"
               (click)="toggleLike()"
               type="button">
         <span class="heart">{{ isLiked ? '♥' : '♡' }}</span>
-        <span>{{ isLiked ? 'Liked' : 'Like this post' }}</span>
+        <span>{{ isLiked ? 'Liked' : 'Like' }} · {{ likeCount }}</span>
       </button>
 
       <!-- Share -->
@@ -125,15 +136,73 @@
 
     </div>
 
-    <!-- ── Comments placeholder ── -->
+    <!-- ══════════════════════════════════
+         COMMENTS SECTION
+         ══════════════════════════════════ -->
     <div class="comments-section reveal">
       <h3 class="comments-title">// Comments</h3>
-      <div class="comments-placeholder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-        </svg>
-        <p>Comments are coming soon — powered by GitHub Discussions.</p>
+
+      <!-- Comment form -->
+      <form class="comment-form" (ngSubmit)="submitComment()">
+        <input
+          class="comment-input"
+          type="text"
+          placeholder="Your name (optional)"
+          [(ngModel)]="commentName"
+          name="commentName"
+          maxlength="50">
+        <textarea
+          class="comment-textarea"
+          placeholder="Share your thoughts…"
+          [(ngModel)]="commentBody"
+          name="commentBody"
+          rows="4"
+          maxlength="2000"
+          required>
+        </textarea>
+
+        <div class="comment-form-footer">
+          <span class="comment-anon-note" *ngIf="!commentName.trim()">
+            Posting anonymously
+          </span>
+          <span class="comment-char-count">{{ commentBody.length }} / 2000</span>
+          <button class="comment-submit" type="submit" [disabled]="commentSending">
+            {{ commentSending ? 'Posting…' : 'Post Comment' }}
+          </button>
+        </div>
+
+        <p class="comment-error"   *ngIf="commentError">{{ commentError }}</p>
+        <p class="comment-success" *ngIf="commentSuccess">✓ Comment posted!</p>
+      </form>
+
+      <!-- Loading comments -->
+      <div class="comments-loading" *ngIf="commentsLoading">
+        <div class="loading-spinner"></div>
       </div>
+
+      <!-- Comment list -->
+      <div class="comment-list" *ngIf="!commentsLoading">
+        <div class="no-comments" *ngIf="!comments.length">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <p>No comments yet — be the first!</p>
+        </div>
+
+        <div class="comment-item" *ngFor="let c of comments">
+          <div class="comment-avatar">
+            {{ (c.displayName ?? 'A')[0].toUpperCase() }}
+          </div>
+          <div class="comment-content">
+            <div class="comment-meta">
+              <span class="comment-name">{{ c.displayName ?? 'Anonymous' }}</span>
+              <span class="comment-date">{{ formatCommentDate(c.createdAt) }}</span>
+            </div>
+            <p class="comment-body">{{ c.body }}</p>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ── Back to blog ── -->
@@ -151,7 +220,7 @@
   </div>
 </div>
 
-<!-- ── 404 ── -->
+<!-- ── 404 / error ── -->
 <ng-template #notFoundTpl>
   <div class="not-found">
     <div class="section-inner" style="text-align: center; padding-top: 160px;">
@@ -169,3 +238,19 @@
     </div>
   </div>
 </ng-template>
+
+<div class="not-found" *ngIf="!loading && notFound">
+  <div class="section-inner" style="text-align: center; padding-top: 160px;">
+    <span class="section-eyebrow">// 404</span>
+    <h1 class="section-title">Post <em>Not Found</em></h1>
+    <div class="divider"></div>
+    <button class="back-full-btn" (click)="backToList()" style="margin: 2rem auto 0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/>
+        <polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Back to Blog
+    </button>
+  </div>
+</div>
