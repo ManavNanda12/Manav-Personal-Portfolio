@@ -3,6 +3,7 @@ import { HttpClient }         from '@angular/common/http';
 import { Observable }         from 'rxjs';
 import { BlogComment, BlogPost, SkeletonPost } from './blog.model';
 import { SKELETON_POSTS }                      from './blogs.data';
+import { environment }                         from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class BlogService {
@@ -11,24 +12,24 @@ export class BlogService {
   // ── Posts ────────────────────────────────────────────────────────────────
 
   getPosts(): Observable<BlogPost[]> {
-    return this.http.get<BlogPost[]>('/api/blog/posts');
+    return this.http.get<BlogPost[]>(`${environment.apiUrl}/api/blog/posts`);
   }
 
   getBySlug(slug: string): Observable<BlogPost> {
-    return this.http.get<BlogPost>(`/api/blog/posts/${slug}`);
+    return this.http.get<BlogPost>(`${environment.apiUrl}/api/blog/posts/${slug}`);
   }
 
   // ── View tracking (fire-and-forget — swallow errors) ─────────────────────
 
   trackView(slug: string): void {
-    this.http.post(`/api/blog/posts/${slug}/view`, {}).subscribe({ error: () => {} });
+    this.http.post(`${environment.apiUrl}/api/blog/posts/${slug}/view`, {}).subscribe({ error: () => {} });
   }
 
   // ── Likes ────────────────────────────────────────────────────────────────
 
   toggleLike(slug: string, token: string): Observable<{ liked: boolean; count: number }> {
     return this.http.post<{ liked: boolean; count: number }>(
-      `/api/blog/posts/${slug}/like`,
+      `${environment.apiUrl}/api/blog/posts/${slug}/like`,
       { token }
     );
   }
@@ -36,12 +37,12 @@ export class BlogService {
   // ── Comments ─────────────────────────────────────────────────────────────
 
   getComments(slug: string): Observable<BlogComment[]> {
-    return this.http.get<BlogComment[]>(`/api/blog/posts/${slug}/comments`);
+    return this.http.get<BlogComment[]>(`${environment.apiUrl}/api/blog/posts/${slug}/comments`);
   }
 
   postComment(slug: string, body: string, displayName?: string): Observable<BlogComment> {
     return this.http.post<BlogComment>(
-      `/api/blog/posts/${slug}/comments`,
+      `${environment.apiUrl}/api/blog/posts/${slug}/comments`,
       { body, displayName: displayName || undefined }
     );
   }

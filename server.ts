@@ -15,6 +15,15 @@ const app        = express();
 const distFolder = join(process.cwd(), 'dist/public/browser');
 
 app.use(express.json());
+
+app.use('/api', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') { res.sendStatus(200); return; }
+  next();
+});
+
 app.use('/api/blog', blogRoutes);
 app.use(express.static(distFolder, { maxAge: '1y', index: false }));
 

@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  apiUrl: '',
   emailjs: {
     serviceId: 'service_bxpxf68',
     contactUstemplateId: 'template_acrlk04',
