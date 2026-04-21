@@ -18,8 +18,8 @@
 <!-- ── Navigation ── -->
 <app-nav></app-nav>
 
-<!-- ── Page sections ── -->
-<main>
+<!-- ── Portfolio sections (hidden on blog pages) ── -->
+<main *ngIf="!isBlogRoute">
   <app-hero></app-hero>
   <app-marquee></app-marquee>
   <app-about></app-about>
@@ -31,9 +31,9 @@
   <app-contact></app-contact>
 </main>
 
-<app-footer></app-footer>
+<app-footer *ngIf="!isBlogRoute"></app-footer>
 
-<!-- Router outlet renders the invisible SectionPlaceholderComponent for each route -->
+<!-- Router outlet: invisible placeholder for section routes; real page for /blog routes -->
 <router-outlet></router-outlet>
 
 <!-- ── Back to top ── -->

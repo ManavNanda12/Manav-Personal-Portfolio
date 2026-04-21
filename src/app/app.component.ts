@@ -8,7 +8,8 @@ import {
   Inject
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { RouterOutlet }                    from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd }        from '@angular/router';
+import { filter }                                     from 'rxjs/operators';
 import {
   trigger,
   style,
@@ -71,11 +72,37 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly isBrowser  = isPlatformBrowser(this.platformId);
 
+  /** True while the user is on any /blog route — hides the portfolio sections */
+  isBlogRoute = false;
+
   constructor(
     private http:       HttpClient,
     private seoService: SeoService,
+    private router:     Router,
     @Inject(DOCUMENT) private doc: Document
-  ) {}
+  ) {
+    // Set initial value synchronously so SSR prerender is also correct
+    this.isBlogRoute = this.doc.location.pathname.startsWith('/blog');
+
+    // Keep in sync on every client-side navigation
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd)
+    ).subscribe(e => {
+      const wasBlog    = this.isBlogRoute;
+      this.isBlogRoute = e.urlAfterRedirects.startsWith('/blog');
+
+      // When navigating FROM a blog page BACK to a portfolio section,
+      // *ngIf re-creates <main> with fresh DOM — all .reveal elements start at
+      // opacity:0 and initReveal() won't run again. Make them visible immediately.
+      if (wasBlog && !this.isBlogRoute && isPlatformBrowser(this.platformId)) {
+        setTimeout(() => {
+          document.querySelectorAll<HTMLElement>('.reveal').forEach(el => {
+            el.classList.add('visible');
+          });
+        }, 100);
+      }
+    });
+  }
 
   // ── Scroll & back-to-top ──
   scrollProgress = 0;
@@ -202,6 +229,12 @@ export class AppComponent implements OnInit, OnDestroy {
     const sectionId = this.routeToSection[path];
     if (!sectionId) return;
     setTimeout(() => {
+      // On direct URL access, the IntersectionObserver can miss elements that
+      // rapidly pass through the viewport during a programmatic smooth-scroll.
+      // Eagerly mark everything visible so no section stays hidden.
+      document.querySelectorAll<HTMLElement>('.reveal').forEach(el => {
+        el.classList.add('visible');
+      });
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
     }, 250);
   }

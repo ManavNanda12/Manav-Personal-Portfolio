@@ -1,5 +1,5 @@
-import { Routes } from '@angular/router';
-import { Component } from '@angular/core';
+import { Routes }    from '@angular/router';
+import { Component }  from '@angular/core';
 
 // Invisible placeholder — all real content lives in AppComponent.
 // These routes exist purely so Angular Router doesn't 404 on direct URL visits.
@@ -18,5 +18,20 @@ export const routes: Routes = [
   { path: 'services',     component: SectionPlaceholderComponent, title: 'Services | Manav Nanda' },
   { path: 'testimonials', component: SectionPlaceholderComponent, title: 'Testimonials | Manav Nanda' },
   { path: 'contact',      component: SectionPlaceholderComponent, title: 'Contact | Manav Nanda' },
+
+  // ── Blog routes (lazy loaded) ──
+  {
+    path: 'blog',
+    loadComponent: () =>
+      import('./blog/blog-list/blog-list.component').then(m => m.BlogListComponent),
+    title: 'Blog | Manav Nanda'
+  },
+  {
+    path: 'blog/:slug',
+    loadComponent: () =>
+      import('./blog/blog-detail/blog-detail.component').then(m => m.BlogDetailComponent),
+    title: 'Blog | Manav Nanda'
+  },
+
   { path: '**', redirectTo: '' }
 ];

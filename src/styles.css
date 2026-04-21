@@ -19,7 +19,115 @@ html { scroll-behavior: smooth; }
   --accent3: #f472b6;
   --text:    #e2e8f0;
   --muted:   #64748b;
+  /* RGB components for rgba() overlays */
+  --bg-raw:  8, 8, 18;
+  /* Code block surface — stays dark even in light mode */
+  --code-bg: #0d0b1f;
+  /* Theme-transition origin (set by ThemeService before each toggle) */
+  --theme-origin-x: 50%;
+  --theme-origin-y: 10%;
 }
+
+/* ════════════════════════════════════════════════════════
+   LIGHT "CRYSTAL AURORA" THEME
+   Deep amethyst-tinted whites — not plain, not dull.
+   Strong contrast, vibrant accents, holographic feel.
+   ════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  --bg:      #faf8ff;           /* near-white with purple tint */
+  --bg2:     #f0ebff;           /* soft amethyst surface */
+  --bg3:     #e8e0ff;           /* medium amethyst card */
+  --surface: rgba(109,40,217,0.05);
+  --border:  rgba(109,40,217,0.16);
+  --accent:  #7c3aed;
+  --accent2: #0369a1;           /* deep sky-blue — readable on light */
+  --accent3: #be185d;           /* deep rose */
+  --text:    #0f0b1e;           /* near-black with purple tint */
+  --muted:   #3e3268;           /* ★ MUCH darker — key fix for readability */
+  --bg-raw:  250,248,255;
+  --code-bg: #1e1a33;           /* code stays dark, intentional */
+}
+
+/* ── Body & base ── */
+html[data-theme="light"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ── Cursor ── */
+html[data-theme="light"] .cursor-ring {
+  border-color: rgba(3,105,161,0.45);
+}
+html[data-theme="light"] .cursor-ring.cursor-hover {
+  border-color: rgba(124,58,237,0.55);
+}
+html[data-theme="light"] .cursor-dot {
+  background: var(--accent2);
+}
+
+/* ── Grid overlay — bolder lines on light ── */
+html[data-theme="light"] .grid-overlay {
+  background-image:
+    linear-gradient(rgba(109,40,217,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109,40,217,0.08) 1px, transparent 1px);
+}
+
+/* ── Hero nebula — boost vibrancy for light ── */
+html[data-theme="light"] .hero-bg {
+  background:
+    radial-gradient(ellipse 80% 80% at 80% 50%, rgba(124,58,237,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(3,105,161,0.12) 0%, transparent 60%);
+}
+
+/* ── Tags — dark purple text instead of light lavender ── */
+html[data-theme="light"] .tag {
+  color: #5b21b6;
+  background: rgba(109,40,217,0.08);
+  border-color: rgba(109,40,217,0.25);
+}
+
+/* ── Tech chips ── */
+html[data-theme="light"] .tech-chip {
+  color: #0369a1;
+  background: rgba(3,105,161,0.08);
+  border-color: rgba(3,105,161,0.25);
+}
+
+/* ── Chatbot FAB active state ── */
+html[data-theme="light"] .chatbot-fab--active {
+  background: var(--bg3);
+  border-color: rgba(124,58,237,0.4);
+}
+
+
+
+/* ── Blog article body text ── */
+html[data-theme="light"] .article-p { color: var(--muted); }
+html[data-theme="light"] .article-list li { color: var(--muted); }
+
+/* ── Section descriptions ── */
+html[data-theme="light"] .section-desc { color: var(--muted); }
+
+/* ── Demo modal ── */
+html[data-theme="light"] .demo-modal__title { color: var(--text); }
+html[data-theme="light"] .demo-modal__slide-count { color: var(--muted); }
+html[data-theme="light"] .demo-modal__footer-left { color: var(--muted); }
+html[data-theme="light"] .demo-modal__footer-brand { color: var(--muted); }
+html[data-theme="light"] .demo-modal__close { color: var(--muted); }
+html[data-theme="light"] kbd {
+  border-color: var(--border);
+  color: var(--muted);
+  background: var(--surface);
+}
+
+/* ── Back-to-top ── */
+html[data-theme="light"] a.back-to-top {
+  background: var(--bg3);
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+/* Scroll progress stays gradient — fine on both themes */
 
 body {
   background: var(--bg);
@@ -343,6 +451,29 @@ a.back-to-top:hover {
   margin-left: 4px;
   vertical-align: middle;
   animation: blink 0.9s infinite;
+}
+
+/* ════════════════════════════════════════════════════════
+   VIEW TRANSITION API — theme-switch circle reveal
+   Works in Chrome 111+ / Firefox 124+. Fallback handled
+   in ThemeService (clip-path overlay) for other browsers.
+   ════════════════════════════════════════════════════════ */
+
+@keyframes theme-reveal {
+  from { clip-path: circle(0%   at var(--theme-origin-x) var(--theme-origin-y)); }
+  to   { clip-path: circle(150% at var(--theme-origin-x) var(--theme-origin-y)); }
+}
+
+/* Freeze old screenshot — new theme circle expands over it */
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+/* New theme reveals in an expanding circle from the toggle button */
+::view-transition-new(root) {
+  animation: theme-reveal 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+  z-index: 2;
 }
 
 /* ── Responsive ── */

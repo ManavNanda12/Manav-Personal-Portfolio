@@ -122,7 +122,7 @@
 .project-img-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 40%, rgba(8, 8, 18, 0.9));
+  background: linear-gradient(to bottom, transparent 40%, rgba(var(--bg-raw), 0.9));
 }
 
 .project-type-badge {

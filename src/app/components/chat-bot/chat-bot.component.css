@@ -8,7 +8,7 @@
 .chatbot-panel {
   position: relative;
   width: 380px;
-  background: #0d0d1f;                          /* --bg2 */
+  background: var(--bg2);
   border: 1px solid rgba(124, 58, 237, 0.25);   /* accent border */
   border-radius: 12px;
   box-shadow:
@@ -29,7 +29,7 @@
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-top: 10px solid #0d0d1f;
+  border-top: 10px solid var(--bg2);
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
   z-index: 1;
 }
@@ -46,7 +46,7 @@
     rgba(124, 58, 237, 0.25) 0%,
     rgba(6, 182, 212, 0.12) 100%
   );
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--border);
   position: relative;
   flex-shrink: 0;
 }
@@ -79,13 +79,13 @@
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: #e2e8f0;
+  color: var(--text);
 }
 .chatbot-header__name .name-dot { color: #06b6d4; }
 
 .chatbot-header__status {
   font-size: 0.68rem;
-  color: #64748b;
+  color: var(--muted);
   display: flex;
   align-items: center;
   gap: 5px;
@@ -170,7 +170,7 @@
 
 .chat-avatar--bot {
   background: linear-gradient(135deg, #7c3aed, #06b6d4);
-  color: #080812;
+  color: var(--bg);
   padding: 4px;
   border-radius: 8px;
 }
@@ -193,20 +193,20 @@
 
 /* Bot bubble — card style matching portfolio */
 .chat-bubble--bot {
-  background: #111128;                            /* --bg3 */
-  color: #cbd5e1;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg3);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 10px 10px 10px 2px;
   border-left: 2px solid #7c3aed;
 }
 
 /* Bot bubble rich-text */
-.chat-bubble--bot p          { margin: 0 0 6px; color: #cbd5e1; font-size: 0.8rem; line-height: 1.65; }
+.chat-bubble--bot p          { margin: 0 0 6px; color: var(--text); font-size: 0.8rem; line-height: 1.65; }
 .chat-bubble--bot p:last-child { margin-bottom: 0; }
 .chat-bubble--bot strong     { color: #06b6d4; font-weight: 700; }
 .chat-bubble--bot em         { color: #a78bfa; font-style: italic; }
 .chat-bubble--bot ul         { margin: 6px 0 0; padding: 0; list-style: none; }
-.chat-bubble--bot ul li      { position: relative; padding-left: 14px; margin-bottom: 5px; font-size: 0.8rem; color: #cbd5e1; }
+.chat-bubble--bot ul li      { position: relative; padding-left: 14px; margin-bottom: 5px; font-size: 0.8rem; color: var(--text); }
 .chat-bubble--bot ul li::before {
   content: '▸';
   position: absolute;
@@ -235,7 +235,7 @@
 
 .thinking-label {
   font-size: 0.72rem;
-  color: #64748b;
+  color: var(--muted);
   font-style: italic;
   white-space: nowrap;
   letter-spacing: 0.04em;
@@ -274,7 +274,7 @@
   font-size: 0.62rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #475569;
+  color: var(--muted);
   margin-bottom: 8px;
 }
 
@@ -301,7 +301,7 @@
 .quick-chip:hover {
   background: rgba(124, 58, 237, 0.18);
   border-color: #7c3aed;
-  color: #e2e8f0;
+  color: var(--text);
   transform: translateY(-1px);
 }
 
@@ -311,8 +311,8 @@
   align-items: center;
   gap: 8px;
   padding: 10px 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: #080812;                            /* --bg */
+  border-top: 1px solid var(--border);
+  background: var(--bg);
   flex-shrink: 0;
 }
 
@@ -323,18 +323,18 @@
 
 .chatbot-input input {
   width: 100%;
-  background: #111128;                            /* --bg3 */
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg3);
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 9px 12px;
-  color: #e2e8f0;
+  color: var(--text);
   font-family: 'Space Mono', monospace;
   font-size: 0.78rem;
   outline: none;
   transition: border-color 0.25s, box-shadow 0.25s;
 }
 
-.chatbot-input input::placeholder { color: #475569; }
+.chatbot-input input::placeholder { color: var(--muted); }
 
 .chatbot-input input:focus {
   border-color: #7c3aed;
@@ -385,15 +385,15 @@
   justify-content: center;
   gap: 5px;
   padding: 6px 12px 8px;
-  background: #080812;
-  border-top: 1px solid rgba(255,255,255,0.04);
+  background: var(--bg);
+  border-top: 1px solid var(--border);
   font-size: 0.6rem;
   letter-spacing: 0.08em;
-  color: #334155;
+  color: var(--muted);
 }
 
 .chatbot-footer__brand {
-  color: #475569;
+  color: var(--muted);
   font-weight: 700;
 }
 
