@@ -6,21 +6,20 @@ import blogRoutes     from './src/server/blog.routes';
 if (process.env['NODE_ENV'] !== 'production') {
   const dotenvPath = join(process.cwd(), '.env');
   if (existsSync(dotenvPath)) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('dotenv').config({ path: dotenvPath });
   }
 }
 
 const app        = express();
-const distFolder = join(process.cwd(), 'dist/browser');
+const distFolder = join(process.cwd(), 'dist/public/browser');
+
+app.use(express.json());
+
+app.use('/api/blog', blogRoutes);
 
 app.use(express.static(distFolder, { maxAge: '1y' }));
 
-app.get('/', (_req, res) => {
-  res.sendFile(join(distFolder, 'index.html'));
-});
-
-app.get('/**', (_req, res) => {
+app.get('*', (_req, res) => {
   res.sendFile(join(distFolder, 'index.html'));
 });
 
