@@ -12,15 +12,15 @@ if (process.env['NODE_ENV'] !== 'production') {
 }
 
 const app        = express();
-const distFolder = join(process.cwd(), 'dist/public/browser');
+const distFolder = join(process.cwd(), 'dist/browser');
 
-app.use(express.json());
+app.use(express.static(distFolder, { maxAge: '1y' }));
 
-app.use('/api/blog', blogRoutes);
+app.get('/', (_req, res) => {
+  res.sendFile(join(distFolder, 'index.html'));
+});
 
-app.use(express.static(distFolder, { maxAge: '1y', index: false }));
-
-app.use('/**', (_req, res) => {
+app.get('/**', (_req, res) => {
   res.sendFile(join(distFolder, 'index.html'));
 });
 
