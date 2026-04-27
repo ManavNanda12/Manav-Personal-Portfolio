@@ -21,31 +21,13 @@ interface Testimonial {
 export class TestimonialsComponent {
   testimonials: Testimonial[] = [
     {
-      name: 'Ravi Patel',
-      role: 'Senior Project Manager',
-      company: 'Shaligram Infotech',
+      name: 'Karandeep Sinh Jadeja',
+      role: 'Risk Consulting Analyst',
+      company: 'EY',
       avatar: 'RP',
       linkedin: 'https://linkedin.com/in/manav-nanda',
-      relation: 'Managed Manav at Shaligram Infotech',
-      text: `Manav consistently delivered well-architected Angular and .NET Core solutions under tight deadlines. His ability to optimise SQL queries — cutting data retrieval time by 40% — saved us significant infrastructure cost. He's the kind of developer who doesn't just write code, he understands the business problem first.`
-    },
-    {
-      name: 'Priya Mehta',
-      role: 'Lead Frontend Engineer',
-      company: 'Shaligram Infotech',
-      avatar: 'PM',
-      linkedin: 'https://linkedin.com/in/manav-nanda',
-      relation: 'Worked alongside Manav',
-      text: `Working with Manav on our AWS migration was a genuinely collaborative experience. He took ownership of our EC2/S3/RDS setup end-to-end and mentored junior devs on deployment best practices. His code reviews are thorough and constructive — exactly what a growing team needs.`
-    },
-    {
-      name: 'Arjun Shah',
-      role: 'Technical Lead',
-      company: 'Evince Development',
-      avatar: 'AS',
-      linkedin: 'https://linkedin.com/in/manav-nanda',
-      relation: 'Works with Manav at Evince Development',
-      text: `Manav ramped up on our DotNetNuke + NgRx stack faster than anyone I've seen. He owns 20+ independently deployable Angular modules and has a sharp eye for state management patterns. His Cloudflare Turnstile integration was clean, well-documented, and shipped without a single regression.`
+      relation: 'College teammate for final year project',
+      text: `Worked with Manav and can confidently say his development skills are top-notch. From frontend to backend, plus his AI-driven thinking - he brings real innovation to the table.`
     }
   ];
 
