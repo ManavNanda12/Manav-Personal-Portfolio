@@ -11,8 +11,19 @@
       </p>
     </div>
 
+    <!-- ── Loading state ── -->
+    <div class="blog-loading" *ngIf="loading">
+      <div class="loading-spinner"></div>
+      <p>Loading posts…</p>
+    </div>
+
+    <!-- ── Error state ── -->
+    <div class="blog-error reveal" *ngIf="error">
+      <p>⚠ Could not load posts. Please try again later.</p>
+    </div>
+
     <!-- ── Featured post ── -->
-    <div class="featured-wrapper reveal" *ngIf="posts.length">
+    <div class="featured-wrapper reveal" *ngIf="!loading && posts.length">
       <div class="featured-card" (click)="navigate(posts[0])">
 
         <!-- Cover art -->
@@ -28,6 +39,8 @@
             <span class="meta-date">{{ formatDate(posts[0].date) }}</span>
             <span class="meta-dot">·</span>
             <span class="meta-read">{{ posts[0].readTime }} min read</span>
+            <span class="meta-dot">·</span>
+            <span class="meta-views">👁 {{ posts[0].views }}</span>
           </div>
 
           <h2 class="featured-title">{{ posts[0].title }}</h2>
@@ -50,13 +63,13 @@
     </div>
 
     <!-- ── Coming soon header ── -->
-    <div class="coming-soon-header reveal">
+    <div class="coming-soon-header reveal" *ngIf="!loading">
       <span class="section-eyebrow">// More Posts</span>
       <p class="coming-soon-sub">More articles in the works — subscribe or check back soon.</p>
     </div>
 
     <!-- ── Skeleton cards ── -->
-    <div class="skeleton-grid">
+    <div class="skeleton-grid" *ngIf="!loading">
       <div class="skeleton-card reveal" *ngFor="let s of skeletons; let i = index"
            [style.animation-delay]="(i * 0.1) + 's'">
 

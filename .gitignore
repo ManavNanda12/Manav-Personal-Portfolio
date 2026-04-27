@@ -23,6 +23,9 @@ pnpm-debug.log*
 # =========================
 # Environment files (secrets)
 # =========================
+.env
+.env.local
+.env.*
 # src/environments/environment*.ts
 # !src/environments/environment.example.ts
 

@@ -2,9 +2,15 @@
   "name": "@workspace/portfolio",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "NG_CLI_ANALYTICS=false ng serve --host 0.0.0.0 --port 21113 --disable-host-check",
-    "build": "ng build --output-path dist/public",
+    "dev:api": "tsx server.dev.ts",
+    "dev:full": "concurrently \"npm run dev:api\" \"ng serve --proxy-config proxy.conf.json\"",
+    "build": "ng build --output-path dist/public && tsc -p tsconfig.server.json",
+    "start": "node dist/server-compiled/server.js",
     "typecheck": "tsc -p tsconfig.app.json --noEmit"
   },
   "dependencies": {
@@ -18,7 +24,11 @@
     "@angular/platform-server": "^19.2.20",
     "@angular/router": "^19.0.0",
     "@angular/ssr": "^19.2.24",
+    "@types/express": "^5.0.6",
+    "dotenv": "^17.4.2",
     "emailjs-com": "^3.2.0",
+    "express": "^5.2.1",
+    "mongodb": "^7.2.0",
     "ngx-toastr": "^19.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -29,6 +39,8 @@
     "@angular/cli": "^19.0.0",
     "@angular/compiler-cli": "^19.0.0",
     "@types/node": "^18.18.0",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.21.0",
     "typescript": "~5.6.0"
   }
 }

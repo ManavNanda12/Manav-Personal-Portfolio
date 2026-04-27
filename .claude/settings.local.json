@@ -4,7 +4,10 @@
       "Bash(npx tsc:*)",
       "Bash(npx ng:*)",
       "Bash(node -e \"console.log\\(require\\('./node_modules/@angular/ssr/package.json'\\).version\\)\")",
-      "Bash(node -e \"console.log\\(require\\('./node_modules/@angular/platform-server/package.json'\\).version\\)\")"
+      "Bash(node -e \"console.log\\(require\\('./node_modules/@angular/platform-server/package.json'\\).version\\)\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('@angular/core:', p.dependencies['@angular/core']\\); console.log\\('@angular/ssr:', p.dependencies['@angular/ssr']\\); console.log\\('mongodb:', p.dependencies['mongodb']\\);\")",
+      "Bash(npm install *)",
+      "Bash(node -e \"require\\('mongodb'\\); require\\('express'\\); console.log\\('OK'\\)\")"
     ]
   }
 }

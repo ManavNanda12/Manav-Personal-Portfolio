@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  apiUrl: 'https://manav-personal-portfolio-production.up.railway.app',
   emailjs: {
     serviceId: 'service_bxpxf68',
     contactUstemplateId: 'template_acrlk04',
