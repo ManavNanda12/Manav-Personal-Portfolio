@@ -266,6 +266,38 @@
   margin-top: 0.25rem;
 }
 
+/* Try Now button */
+.try-now-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(6, 182, 212, 0.1));
+  border: 1px solid rgba(124, 58, 237, 0.45);
+  color: #a78bfa;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  width: fit-content;
+  margin-top: 0.5rem;
+  transition: all 0.25s;
+}
+
+.try-now-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.try-now-btn:hover {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(6, 182, 212, 0.15));
+  border-color: rgba(124, 58, 237, 0.7);
+  box-shadow: 0 0 24px rgba(124, 58, 237, 0.25);
+  color: #c4b5fd;
+}
+
 /* ─────────────────────────────────────
    ARTICLE BODY
 ───────────────────────────────────── */

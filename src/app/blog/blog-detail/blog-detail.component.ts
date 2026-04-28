@@ -11,6 +11,7 @@ import { Title, Meta }                     from '@angular/platform-browser';
 import { BlogComment, BlogPost, ContentBlock } from '../blog.model';
 import { BlogService }                        from '../blog.service';
 import { ThemeService }                       from '../../services/theme.service';
+import { ChatService }                        from '../../services/chat.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -24,6 +25,7 @@ export class BlogDetailComponent implements OnInit {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   post:           BlogPost | undefined;
+  slug            = '';
   notFound        = false;
   loading         = true;
 
@@ -50,8 +52,11 @@ export class BlogDetailComponent implements OnInit {
     private blogService:  BlogService,
     public  themeService: ThemeService,
     private title:        Title,
-    private meta:         Meta
+    private meta:         Meta,
+    private chatService:  ChatService
   ) {}
+
+  openChat() { this.chatService.open(); }
 
   /** Cover gradient adapts to theme */
   get heroBackground(): string {
@@ -74,6 +79,7 @@ export class BlogDetailComponent implements OnInit {
 
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug') ?? '';
+    this.slug  = slug;
 
     if (this.isBrowser) {
       window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });

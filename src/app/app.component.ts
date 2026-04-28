@@ -31,6 +31,7 @@ import { ChatbotComponent }        from './components/chat-bot/chat-bot.componen
 import { TestimonialsComponent }   from './components/testimonials/testimonials.component';
 import { HttpClient }              from '@angular/common/http';
 import { SeoService }              from './services/seo.service';
+import { ChatService }             from './services/chat.service';
 
 @Component({
   selector: 'app-root',
@@ -76,9 +77,10 @@ export class AppComponent implements OnInit, OnDestroy {
   isBlogRoute = false;
 
   constructor(
-    private http:       HttpClient,
-    private seoService: SeoService,
-    private router:     Router,
+    private http:        HttpClient,
+    private seoService:  SeoService,
+    private router:      Router,
+    private chatService: ChatService,
     @Inject(DOCUMENT) private doc: Document
   ) {
     // Set initial value synchronously so SSR prerender is also correct
@@ -146,6 +148,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.initReveal();
       this.trackVisitor();
       this.scrollToInitialSection();
+      this.chatService.open$.subscribe(() => { this.isChatOpen = true; });
     }
   }
 
