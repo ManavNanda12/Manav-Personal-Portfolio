@@ -46,7 +46,7 @@ export class CskService {
     this.launchSparkles(originX, originY);
     this.animateReveal(originX, originY, '#04101f');
     this.burstConfetti(originX, originY);
-    // this.startBubbles();
+    this.startBubbles();
   }
 
   deactivate(originX: number, originY: number): void {
@@ -54,7 +54,7 @@ export class CskService {
     this._isActive = false;
     this.launchSparkles(originX, originY);
     this.animateReveal(originX, originY, this.baseColor());
-    // this.stopBubbles();
+    this.stopBubbles();
   }
 
   private baseColor(): string {
@@ -77,7 +77,7 @@ export class CskService {
     Object.assign(this.bubbleLayer.style, {
       position: 'fixed', inset: '0',
       pointerEvents: 'none',
-      zIndex: '50',        // above content, below nav (100) and panel (500)
+      zIndex: '2',         // behind all content; purely decorative
       overflow: 'hidden',
     });
     document.body.appendChild(this.bubbleLayer);
@@ -87,10 +87,10 @@ export class CskService {
     this.stopBubbles();
     // Re-create the layer AFTER stopBubbles() clears it
     this.ensureBubbleLayer();
-    // Initial burst — 8 bubbles staggered
-    for (let i = 0; i < 8; i++) setTimeout(() => this.spawnBubble(), i * 100);
-    // Ongoing — one every 600ms
-    this.bubbleTimer = setInterval(() => this.spawnBubble(), 600);
+    // Initial burst — 3 bubbles staggered
+    for (let i = 0; i < 3; i++) setTimeout(() => this.spawnBubble(), i * 300);
+    // Ongoing — one every 1400ms
+    this.bubbleTimer = setInterval(() => this.spawnBubble(), 1400);
   }
 
   private stopBubbles(): void {

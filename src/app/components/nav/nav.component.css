@@ -245,6 +245,12 @@
 
 .mobile-menu a.blog-link { color: var(--accent2); }
 
+/* ── CSK banner offset — beats the component's own top:0 via host-context ── */
+:host-context(html[data-csk="true"]) .nav { top: 28px; }
+@media (max-width: 768px) {
+  :host-context(html[data-csk="true"]) .nav { top: 22px; }
+}
+
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .hamburger { display: flex; }

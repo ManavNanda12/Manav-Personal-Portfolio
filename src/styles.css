@@ -585,20 +585,21 @@ html[data-csk="true"] .mobile-menu a.active { color: #ffcb05; }
   letter-spacing: 0.13em;
   text-transform: uppercase;
   white-space: nowrap;
-  /* default: yellow pill */
-  background: #ffcb05;
-  color: #0b1a3a;
-  box-shadow: 0 6px 24px rgba(255,203,5,0.35), 0 2px 8px rgba(0,0,0,0.3);
+  background: rgba(255,203,5,0.12);
+  color: rgba(255,203,5,0.55);
+  border: 1px solid rgba(255,203,5,0.2);
+  box-shadow: none;
+  opacity: 0.35;
   will-change: transform, opacity;
   animation: cskBubbleFloat linear forwards;
 }
 
 /* outline / glass variant */
 .csk-bubble--outline {
-  background: rgba(255,203,5,0.08);
-  color: #ffcb05;
-  border: 1.5px solid rgba(255,203,5,0.5);
-  box-shadow: 0 4px 16px rgba(255,203,5,0.12), inset 0 0 0 1px rgba(255,203,5,0.08);
+  background: transparent;
+  color: rgba(255,203,5,0.5);
+  border: 1px solid rgba(255,203,5,0.18);
+  box-shadow: none;
 }
 
 @keyframes cskBubbleFloat {
