@@ -62,9 +62,12 @@
 <router-outlet></router-outlet>
 
 <!-- ── Back to top ── -->
-<a *ngIf="showBackToTop" href="#hero" class="back-to-top" aria-label="Back to top">↑</a>
+<a *ngIf="showBackToTop" href="/" class="back-to-top" aria-label="Back to top">↑</a>
 
-<!-- ── CSK Panel ── -->
+<!-- ── CSK Matchday Splash (fires once per activation) ── -->
+<app-csk-splash></app-csk-splash>
+
+<!-- ── CSK Side Drawer Panel ── -->
 <app-csk-panel></app-csk-panel>
 
 <!-- ── Toast ── -->

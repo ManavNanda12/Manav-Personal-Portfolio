@@ -1,34 +1,14 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser }                from '@angular/common';
-
-const STATS = [
-  '🏆 5× IPL Champions',
-  '🦁 Yellove',
-  '📅 Est. 2008',
-  '⚡ Thala · MS Dhoni',
-  '📣 Whistle Podu',
-  '🎯 10 Finals',
-  '👨‍👴 Daddies Army',
-  '🏟️ Chepauk Roar',
-  '💛 Anbuden',
-  '😎 Captain Cool',
-  '#WhistlePodu',
-  '💛 Yellow Army',
-  '🏆 2010 · 2011 · 2018 · 2021 · 2023',
-  '🦁 Lions of Chennai',
-  '👑 Superkings',
-  '🔢 Dhoni #7',
-  '🏏 Stephen Fleming',
-  '🌟 Ruturaj Gaikwad',
-];
+import { Subject }                          from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CskService {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private _isActive = false;
-  private bubbleTimer: ReturnType<typeof setInterval> | null = null;
-  private bubbleLayer: HTMLElement | null = null;
+  readonly splashActivate$ = new Subject<void>();
+  readonly stateChange$    = new Subject<boolean>();
 
   get isActive(): boolean { return this._isActive; }
 
@@ -46,7 +26,8 @@ export class CskService {
     this.launchSparkles(originX, originY);
     this.animateReveal(originX, originY, '#04101f');
     this.burstConfetti(originX, originY);
-    this.startBubbles();
+    this.splashActivate$.next();
+    this.stateChange$.next(true);
   }
 
   deactivate(originX: number, originY: number): void {
@@ -54,7 +35,7 @@ export class CskService {
     this._isActive = false;
     this.launchSparkles(originX, originY);
     this.animateReveal(originX, originY, this.baseColor());
-    this.stopBubbles();
+    this.stateChange$.next(false);
   }
 
   private baseColor(): string {
@@ -67,65 +48,6 @@ export class CskService {
     } else {
       document.documentElement.removeAttribute('data-csk');
     }
-  }
-
-  // ── Bubble layer ────────────────────────────────────────────────────────────
-
-  private ensureBubbleLayer(): void {
-    if (this.bubbleLayer && document.body.contains(this.bubbleLayer)) return;
-    this.bubbleLayer = document.createElement('div');
-    Object.assign(this.bubbleLayer.style, {
-      position: 'fixed', inset: '0',
-      pointerEvents: 'none',
-      zIndex: '2',         // behind all content; purely decorative
-      overflow: 'hidden',
-    });
-    document.body.appendChild(this.bubbleLayer);
-  }
-
-  private startBubbles(): void {
-    this.stopBubbles();
-    // Re-create the layer AFTER stopBubbles() clears it
-    this.ensureBubbleLayer();
-    // Initial burst — 3 bubbles staggered
-    for (let i = 0; i < 3; i++) setTimeout(() => this.spawnBubble(), i * 300);
-    // Ongoing — one every 1400ms
-    this.bubbleTimer = setInterval(() => this.spawnBubble(), 1400);
-  }
-
-  private stopBubbles(): void {
-    if (this.bubbleTimer !== null) { clearInterval(this.bubbleTimer); this.bubbleTimer = null; }
-    if (this.bubbleLayer) {
-      const layer = this.bubbleLayer;
-      this.bubbleLayer = null;
-      // Let existing bubbles finish their flight before removing layer
-      setTimeout(() => layer.remove(), 2000);
-    }
-  }
-
-  private spawnBubble(): void {
-    if (!this.bubbleLayer || !this._isActive) return;
-    const stat    = STATS[Math.floor(Math.random() * STATS.length)];
-    const el      = document.createElement('div');
-    const isGlass = Math.random() > 0.5;
-    el.className  = 'csk-bubble' + (isGlass ? ' csk-bubble--outline' : '');
-    el.textContent = stat;
-
-    const x   = 2  + Math.random() * 88;         // % across viewport
-    const dur = 9  + Math.random() * 9;            // 9–18 s
-    const r0  = (Math.random() * 18 - 9).toFixed(1);
-    const r1  = (parseFloat(r0) + (Math.random() * 32 - 16)).toFixed(1);
-    const fs  = 10 + Math.random() * 8;           // font-size 10–18px
-
-    el.style.left              = `${x}vw`;
-    el.style.bottom            = '-90px';
-    el.style.animationDuration = `${dur}s`;
-    el.style.fontSize          = `${fs}px`;
-    el.style.setProperty('--r0', `${r0}deg`);
-    el.style.setProperty('--r1', `${r1}deg`);
-
-    this.bubbleLayer.appendChild(el);
-    setTimeout(() => el.remove(), dur * 1000 + 400);
   }
 
   // ── Visual effects ──────────────────────────────────────────────────────────

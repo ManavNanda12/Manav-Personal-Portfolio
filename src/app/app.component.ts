@@ -30,6 +30,7 @@ import { FooterComponent }         from './components/footer/footer.component';
 import { ChatbotComponent }        from './components/chat-bot/chat-bot.component';
 import { TestimonialsComponent }   from './components/testimonials/testimonials.component';
 import { CskPanelComponent }       from './components/csk-panel/csk-panel.component';
+import { CskSplashComponent }      from './components/csk-splash/csk-splash.component';
 import { HttpClient }              from '@angular/common/http';
 import { SeoService }              from './services/seo.service';
 import { ChatService }             from './services/chat.service';
@@ -53,6 +54,7 @@ import { ChatService }             from './services/chat.service';
     ChatbotComponent,
     TestimonialsComponent,
     CskPanelComponent,
+    CskSplashComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],

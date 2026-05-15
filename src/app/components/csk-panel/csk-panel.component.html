@@ -1,79 +1,87 @@
 @if (csk.isActive) {
-  <div class="csk-panel" @panelSlide [class.minimized]="minimized">
 
-    <!-- ── Header ── -->
-    <div class="panel-head">
-      <div class="panel-brand">
-        <img class="panel-logo" src="assets/images/csk/csk-logo.png" alt="CSK" />
-        <span class="brand-text">YELLOVE MODE</span>
-        <span class="brand-dot">·</span>
-        <span class="brand-sub">WHISTLE PODU</span>
+  <!-- Pull tab — sticks to right edge -->
+  <button class="csk-tab" [class.csk-tab--hidden]="drawerOpen"
+          (click)="toggleDrawer()" aria-label="Open CSK panel">
+    <img class="csk-tab-logo" src="assets/images/csk/csk-logo.png" alt="CSK" />
+    <span class="csk-tab-text">C<br>S<br>K</span>
+  </button>
+
+  <!-- Backdrop (mobile tap-to-close) -->
+  @if (drawerOpen) {
+    <div class="drawer-backdrop" (click)="toggleDrawer()"></div>
+  }
+
+  <!-- Drawer -->
+  <div class="csk-drawer" [class.csk-drawer--open]="drawerOpen">
+
+    <!-- Header -->
+    <div class="drawer-head">
+      <div class="drawer-brand">
+        <img class="drawer-logo" src="assets/images/csk/csk-logo.png" alt="CSK" />
+        <div>
+          <div class="drawer-title">YELLOVE MODE</div>
+          <div class="drawer-sub">Chennai Super Kings</div>
+        </div>
       </div>
-      <button class="panel-min-btn" (click)="minimized = !minimized"
-              [attr.aria-label]="minimized ? 'Expand panel' : 'Minimize panel'">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          @if (minimized) {
-            <path d="M18 15l-6-6-6 6"/>
-          } @else {
-            <path d="M6 9l6 6 6-6"/>
-          }
+      <button class="drawer-close" (click)="toggleDrawer()" aria-label="Close panel">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M18 6L6 18M6 6l12 12"/>
         </svg>
       </button>
     </div>
 
-    @if (!minimized) {
-
-      <!-- ── Image Gallery Strip ── -->
-      <div class="panel-gallery">
-        <div class="gallery-track">
-          @for (img of galleryImages; track $index) {
-            <div class="gallery-item">
-              <img [src]="img.src" [alt]="img.label" loading="lazy" />
-              <div class="gallery-label">{{ img.label }}</div>
-            </div>
-          }
+    <!-- CSK Highlights -->
+    <div class="drawer-highlights">
+      <div class="drawer-section-label">🦁 CSK PRIDE</div>
+      @for (h of highlights; track h.icon) {
+        <div class="highlight-item">
+          <span class="hl-icon">{{ h.icon }}</span>
+          <span class="hl-text">{{ h.text }}</span>
         </div>
-      </div>
+      }
+    </div>
 
-      <!-- ── Championship Years ── -->
-      <div class="panel-champs">
-        <div class="champs-label">🏆 5× IPL CHAMPIONS</div>
-        <div class="champs-years">
-          @for (item of years; track item.y; let i = $index) {
-            <div class="year-badge" @yearPop [style.animation-delay.ms]="i * 90">
-              <span class="trophy-emoji">🏆</span>
-              <span class="year-text">{{ item.y }}</span>
-            </div>
-          }
-        </div>
-      </div>
-
-      <!-- ── Stats Grid ── -->
-      <div class="panel-stats">
-        @for (s of stats; track s.lbl) {
-          <div class="stat-cell">
-            <span class="stat-icon">{{ s.icon }}</span>
-            <span class="stat-num">{{ s.num }}</span>
-            <span class="stat-lbl">{{ s.lbl }}</span>
+    <!-- Gallery strip -->
+    <div class="drawer-gallery">
+      <div class="drawer-gallery-track">
+        @for (img of galleryImages; track img.src + $index) {
+          <div class="drawer-gallery-item">
+            <img [src]="img.src" [alt]="img.label" loading="lazy" />
+            <span class="drawer-gallery-label">{{ img.label }}</span>
           </div>
         }
       </div>
+    </div>
 
-      <!-- ── Rotating Fact ── -->
-      <div class="panel-fact">
-        <span class="fact-bullet">💡</span>
-        <span class="fact-text">{{ facts[factIndex] }}</span>
+    <!-- Championship years -->
+    <div class="drawer-section">
+      <div class="drawer-section-label">🏆 5× IPL CHAMPIONS</div>
+      <div class="drawer-years">
+        @for (y of years; track y) {
+          <span class="drawer-year">{{ y }}</span>
+        }
       </div>
+    </div>
 
-      <!-- ── Scrolling Marquee ── -->
-      <div class="panel-marquee">
-        <div class="marquee-track">
-          @for (item of marqueeItems; track $index) {
-            <span [class.sep]="item === '◆'">{{ item }}</span>
-          }
+    <!-- Stats -->
+    <div class="drawer-stats">
+      @for (s of stats; track s.lbl) {
+        <div class="drawer-stat">
+          <span class="drawer-stat-icon">{{ s.icon }}</span>
+          <span class="drawer-stat-num">{{ s.num }}</span>
+          <span class="drawer-stat-lbl">{{ s.lbl }}</span>
         </div>
-      </div>
+      }
+    </div>
 
-    }
+    <!-- Rotating fact -->
+    <div class="drawer-fact">
+      <span class="drawer-fact-dot">💛</span>
+      <span class="drawer-fact-text">{{ facts[factIndex] }}</span>
+    </div>
+
   </div>
+
 }

@@ -1,0 +1,36 @@
+@if (visible) {
+  <div class="splash-overlay" [class.dismissing]="dismissing" (click)="dismiss()">
+    <div class="splash-card" [class.dismissing]="dismissing" (click)="$event.stopPropagation()">
+
+      <button class="splash-skip" (click)="dismiss()">
+        Skip
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <img class="splash-logo" src="assets/images/csk/csk-logo.png" alt="CSK" />
+
+      <div class="splash-mode">YELLOVE MODE</div>
+      <div class="splash-name">CHENNAI SUPER KINGS</div>
+
+      <div class="splash-trophies">
+        @for (y of years; track y; let i = $index) {
+          <div class="splash-trophy" [style.animation-delay.ms]="160 + i * 90">
+            <span class="splash-trophy-icon">🏆</span>
+            <span class="splash-trophy-year">{{ y }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="splash-tagline">🦁 &nbsp; WHISTLE PODU!</div>
+
+      <!-- Auto-dismiss progress bar -->
+      <div class="splash-bar">
+        <div class="splash-bar-fill" [class.paused]="dismissing"></div>
+      </div>
+
+    </div>
+  </div>
+}
