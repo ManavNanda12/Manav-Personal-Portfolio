@@ -497,3 +497,167 @@ a.back-to-top:hover {
     left: 1rem;
   }
 }
+
+/* ════════════════════════════════════════════════════════
+   CSK "YELLOVE" THEME — Chennai Super Kings Easter Egg
+   Dark navy background + CSK yellow accents.
+   Lives after [data-theme="light"] so it always wins.
+   ════════════════════════════════════════════════════════ */
+
+html[data-csk="true"] {
+  --bg:      #04101f;           /* very dark navy */
+  --bg2:     #081730;           /* CSK navy */
+  --bg3:     #0d2040;           /* lighter navy for cards */
+  --surface: rgba(255,203,5,0.06);
+  --border:  rgba(255,203,5,0.18);
+  --accent:  #ffcb05;           /* CSK yellow */
+  --accent2: #fdb913;           /* deeper yellow */
+  --accent3: #ffde6e;           /* soft yellow */
+  --text:    #fff8e1;           /* warm cream — very readable */
+  --muted:   rgba(255,248,225,0.52);
+  --bg-raw:  4,16,31;
+  --code-bg: #04101f;
+}
+
+/* Cursor — yellow */
+html[data-csk="true"] .cursor-ring               { border-color: rgba(255,203,5,0.5); }
+html[data-csk="true"] .cursor-ring.cursor-hover  { border-color: rgba(255,203,5,0.85); }
+html[data-csk="true"] .cursor-dot                { background: #ffcb05; mix-blend-mode: normal; }
+
+/* Grid overlay — subtle yellow lines on navy */
+html[data-csk="true"] .grid-overlay {
+  background-image:
+    linear-gradient(rgba(255,203,5,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,203,5,0.04) 1px, transparent 1px);
+}
+
+/* Scroll progress — yellow */
+html[data-csk="true"] .scroll-progress {
+  background: linear-gradient(90deg, #ffcb05, #fdb913);
+}
+
+/* Tags / chips */
+html[data-csk="true"] .tag {
+  color: #ffcb05;
+  background: rgba(255,203,5,0.08);
+  border-color: rgba(255,203,5,0.25);
+}
+html[data-csk="true"] .tech-chip {
+  color: #fdb913;
+  background: rgba(255,203,5,0.07);
+  border-color: rgba(255,203,5,0.2);
+}
+
+/* Chatbot FAB — yellow */
+html[data-csk="true"] .chatbot-fab {
+  background: linear-gradient(135deg, #ffcb05, #fdb913);
+  box-shadow: 0 4px 20px rgba(255,203,5,0.45);
+  animation: none;
+}
+html[data-csk="true"] .chatbot-fab--active {
+  background: #0d2040;
+  border-color: rgba(255,203,5,0.4);
+}
+
+/* Back-to-top */
+html[data-csk="true"] a.back-to-top {
+  background: rgba(255,203,5,0.08);
+  border-color: rgba(255,203,5,0.25);
+  color: #ffcb05;
+}
+
+/* Nav logo / links */
+html[data-csk="true"] .nav-links a:hover,
+html[data-csk="true"] .nav-links a.active { color: #ffcb05; }
+html[data-csk="true"] .nav-links a .underline { background: #ffcb05; }
+html[data-csk="true"] .mobile-menu a:hover,
+html[data-csk="true"] .mobile-menu a.active { color: #ffcb05; }
+
+/* ── CSK Floating Bubbles ── */
+
+.csk-bubble {
+  position: absolute;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  /* default: yellow pill */
+  background: #ffcb05;
+  color: #0b1a3a;
+  box-shadow: 0 6px 24px rgba(255,203,5,0.35), 0 2px 8px rgba(0,0,0,0.3);
+  will-change: transform, opacity;
+  animation: cskBubbleFloat linear forwards;
+}
+
+/* outline / glass variant */
+.csk-bubble--outline {
+  background: rgba(255,203,5,0.08);
+  color: #ffcb05;
+  border: 1.5px solid rgba(255,203,5,0.5);
+  box-shadow: 0 4px 16px rgba(255,203,5,0.12), inset 0 0 0 1px rgba(255,203,5,0.08);
+}
+
+@keyframes cskBubbleFloat {
+  0%   { transform: translateY(0)                    rotate(var(--r0, 0deg)); opacity: 0; }
+  8%   { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(calc(-100vh - 160px)) rotate(var(--r1, 0deg)); opacity: 0; }
+}
+
+/* ── CSK Top Ticker Banner ── */
+.csk-banner {
+  position: fixed;
+  top: 0;
+  left: 0; right: 0;
+  z-index: 99;
+  overflow: hidden;
+  background: linear-gradient(90deg, #ffcb05, #fdb913 50%, #ffcb05);
+  border-bottom: 2px solid #0b1a3a;
+  height: 28px;
+  display: none;
+  align-items: center;
+}
+html[data-csk="true"] .csk-banner { display: flex; }
+html[data-csk="true"] .nav { top: 28px; }
+
+.csk-banner__track {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  animation: cskBannerScroll 22s linear infinite;
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #0b1a3a;
+  align-items: center;
+}
+
+.csk-banner__track .sep {
+  opacity: 0.4;
+  font-size: 8px;
+}
+
+@keyframes cskBannerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── CSK responsive tweaks ── */
+@media (max-width: 768px) {
+  /* Bubbles: smaller font on mobile so text fits screen width */
+  .csk-bubble {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+
+  /* Banner: slim down on mobile */
+  .csk-banner { height: 22px; }
+  html[data-csk="true"] .nav { top: 22px; }
+  .csk-banner__track { font-size: 9px; gap: 28px; letter-spacing: 0.14em; }
+}

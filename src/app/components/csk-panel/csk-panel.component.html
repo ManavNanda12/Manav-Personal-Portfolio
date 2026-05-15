@@ -1,0 +1,79 @@
+@if (csk.isActive) {
+  <div class="csk-panel" @panelSlide [class.minimized]="minimized">
+
+    <!-- ── Header ── -->
+    <div class="panel-head">
+      <div class="panel-brand">
+        <img class="panel-logo" src="assets/images/csk/csk-logo.png" alt="CSK" />
+        <span class="brand-text">YELLOVE MODE</span>
+        <span class="brand-dot">·</span>
+        <span class="brand-sub">WHISTLE PODU</span>
+      </div>
+      <button class="panel-min-btn" (click)="minimized = !minimized"
+              [attr.aria-label]="minimized ? 'Expand panel' : 'Minimize panel'">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          @if (minimized) {
+            <path d="M18 15l-6-6-6 6"/>
+          } @else {
+            <path d="M6 9l6 6 6-6"/>
+          }
+        </svg>
+      </button>
+    </div>
+
+    @if (!minimized) {
+
+      <!-- ── Image Gallery Strip ── -->
+      <div class="panel-gallery">
+        <div class="gallery-track">
+          @for (img of galleryImages; track $index) {
+            <div class="gallery-item">
+              <img [src]="img.src" [alt]="img.label" loading="lazy" />
+              <div class="gallery-label">{{ img.label }}</div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- ── Championship Years ── -->
+      <div class="panel-champs">
+        <div class="champs-label">🏆 5× IPL CHAMPIONS</div>
+        <div class="champs-years">
+          @for (item of years; track item.y; let i = $index) {
+            <div class="year-badge" @yearPop [style.animation-delay.ms]="i * 90">
+              <span class="trophy-emoji">🏆</span>
+              <span class="year-text">{{ item.y }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- ── Stats Grid ── -->
+      <div class="panel-stats">
+        @for (s of stats; track s.lbl) {
+          <div class="stat-cell">
+            <span class="stat-icon">{{ s.icon }}</span>
+            <span class="stat-num">{{ s.num }}</span>
+            <span class="stat-lbl">{{ s.lbl }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- ── Rotating Fact ── -->
+      <div class="panel-fact">
+        <span class="fact-bullet">💡</span>
+        <span class="fact-text">{{ facts[factIndex] }}</span>
+      </div>
+
+      <!-- ── Scrolling Marquee ── -->
+      <div class="panel-marquee">
+        <div class="marquee-track">
+          @for (item of marqueeItems; track $index) {
+            <span [class.sep]="item === '◆'">{{ item }}</span>
+          }
+        </div>
+      </div>
+
+    }
+  </div>
+}

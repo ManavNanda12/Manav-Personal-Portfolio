@@ -4,6 +4,7 @@ import { Router, NavigationEnd }                                   from '@angula
 import { filter }                                                  from 'rxjs/operators';
 import { SeoService }                                              from '../../services/seo.service';
 import { ThemeService }                                            from '../../services/theme.service';
+import { CskService }                                             from '../../services/csk.service';
 
 interface NavLink {
   href:       string;  // real URL path for crawlers (e.g. "/about")
@@ -44,7 +45,8 @@ export class NavComponent implements OnInit {
     private router:       Router,
     private location:     Location,
     private seoService:   SeoService,
-    public  themeService: ThemeService   // public so template can read isDark/isLight
+    public  themeService: ThemeService,  // public so template can read isDark/isLight
+    public  cskService:   CskService     // public so template can read isActive
   ) {}
 
   ngOnInit() {
@@ -138,6 +140,15 @@ export class NavComponent implements OnInit {
   closeMenu()  { this.menuOpen = false; }
 
   onThemeToggle(event: MouseEvent) {
+    // One theme active at a time — deactivate CSK before switching dark/light
+    if (this.cskService.isActive) {
+      this.cskService.deactivate(event.clientX, event.clientY);
+      return;
+    }
     this.themeService.toggle(event.clientX, event.clientY);
+  }
+
+  onCskToggle(event: MouseEvent) {
+    this.cskService.toggle(event.clientX, event.clientY);
   }
 }

@@ -15,6 +15,31 @@
 <!-- ── Grid overlay ── -->
 <div class="grid-overlay"></div>
 
+<!-- ── CSK Top Banner (visible via CSS when data-csk="true") ── -->
+<div class="csk-banner" aria-hidden="true">
+  <div class="csk-banner__track">
+    <span>🦁 CSK MODE ACTIVE</span><span class="sep">◆</span>
+    <span>5× IPL CHAMPIONS</span><span class="sep">◆</span>
+    <span>WHISTLE PODU</span><span class="sep">◆</span>
+    <span>MS DHONI #7</span><span class="sep">◆</span>
+    <span>YELLOVE</span><span class="sep">◆</span>
+    <span>CHEPAUK ROAR</span><span class="sep">◆</span>
+    <span>DADDIES ARMY</span><span class="sep">◆</span>
+    <span>THALA FOR A REASON</span><span class="sep">◆</span>
+    <span>2010 · 2011 · 2018 · 2021 · 2023</span><span class="sep">◆</span>
+    <!-- duplicate for seamless loop -->
+    <span>🦁 CSK MODE ACTIVE</span><span class="sep">◆</span>
+    <span>5× IPL CHAMPIONS</span><span class="sep">◆</span>
+    <span>WHISTLE PODU</span><span class="sep">◆</span>
+    <span>MS DHONI #7</span><span class="sep">◆</span>
+    <span>YELLOVE</span><span class="sep">◆</span>
+    <span>CHEPAUK ROAR</span><span class="sep">◆</span>
+    <span>DADDIES ARMY</span><span class="sep">◆</span>
+    <span>THALA FOR A REASON</span><span class="sep">◆</span>
+    <span>2010 · 2011 · 2018 · 2021 · 2023</span><span class="sep">◆</span>
+  </div>
+</div>
+
 <!-- ── Navigation ── -->
 <app-nav></app-nav>
 
@@ -38,6 +63,9 @@
 
 <!-- ── Back to top ── -->
 <a *ngIf="showBackToTop" href="#hero" class="back-to-top" aria-label="Back to top">↑</a>
+
+<!-- ── CSK Panel ── -->
+<app-csk-panel></app-csk-panel>
 
 <!-- ── Toast ── -->
 <div class="toast" [class.toast--show]="showToast">
